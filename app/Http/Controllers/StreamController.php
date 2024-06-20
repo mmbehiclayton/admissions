@@ -2,84 +2,123 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Stream;
+use App\Models\Branch;
+use App\Models\Classes;
+use App\Models\Streams;
 use Illuminate\Http\Request;
+use Yoeunes\Toastr\Facades\Toastr;
 
 class StreamController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         //
+        
+        $streams = Streams::paginate(100);
+        
+        $pageData = [
+            'title' => 'STREAM LISTINGS  ',
+            'streams' => $streams
+        ];
+        
+
+        return  view('streams.index', $pageData);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
         //
+        $classes = Classes::with('branches')->get();
+
+        $pageData = [
+            'title' => 'STREAM CREATE PAGE',
+            'classes' => $classes
+        ];
+
+        
+        return  view('streams.create', $pageData);
+
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Streams $stream)
     {
-        //
+
+        // dd($request);
+
+        $request->validate([
+            'name' => 'required', 
+            'classes_id' => 'required', 
+        ]);
+
+        $stream->name = $request->input('name');
+        $stream->classes_id = $request->input('classes_id');
+        $stream->save();
+
+        return redirect(route('streams.index'))->with('success', 'Successfully created Stream ');
+
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Stream  $stream
-     * @return \Illuminate\Http\Response
      */
-    public function show(Stream $stream)
+    public function show(string $id)
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Stream  $stream
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Stream $stream)
+    public function edit(Streams $stream)
     {
         //
+        $classes = Classes::all();
+        $pageData = [
+            'title' => 'STREAM EDIT PAGE',
+            'classes' => $classes,
+            'stream' =>$stream
+        ];
+
+        // dd($pageData);
+        
+        return  view('streams.edit', $pageData);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Stream  $stream
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stream $stream)
+    public function update(Request $request, Streams $stream)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'classes_id' => 'required',
+           
+        ]);
+
+        $stream->name = $request->input('name');
+        $stream->classes_id = $request->input('classes_id');
+        $stream->update();
+  
+        return redirect(route('streams.index'))->with('success', 'Successfully updated stream data' );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Stream  $stream
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Stream $stream)
+    public function destroy(Streams $stream)
     {
         //
+        $stream->delete();
+        return redirect(route('streams.index'))->with('Success','Successfully deleted stream record');
     }
 }

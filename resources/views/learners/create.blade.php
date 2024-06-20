@@ -1,114 +1,141 @@
-<x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-1">
-                    <form method="POST" action="{{ route('learners.store') }}">
-                        @csrf
+@extends('layouts.admin')
+@section('content')
+<div class="container px-6 mx-auto grid">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        {{$title}}
+    </h2>
+    <form action="{{route('learners.store')}}" method="post">
+        @csrf
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 grid grid-cols-1 md:grid-cols-3 gap-2 ">
 
-                        <div class="mb-4">
-                            <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <x-input-error :messages="$errors->get('name')" class="mt-2"/>
-                        </div>
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Stream
+                    </span>
+                    <select name="stream_id" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        @foreach ($streams as $stream)
+                        <option value="{{$stream->id}}">{{$stream->classes->name}} {{$stream->name}}</option>
+                        @endforeach
+                    </select>
+                </label>
+                @error('stream_id')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                        <div class="mb-4">
-                            <label for="adm_no" class="block text-sm font-medium text-gray-700">{{ __('Admission Number') }}</label>
-                            <input type="text" name="adm_no" id="adm_no" value="{{ old('adm_no') }}" required
-                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <x-input-error :messages="$errors->get('adm_no')" class="mt-2"/>
-                        </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Name</span>
+                    <input name="name" placeholder="Enter student Name" value="{{old('name')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('name')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                        <div class="mb-4">
-                            <label for="gender" class="block text-sm font-medium text-gray-700">{{ __('Gender') }}</label>
-                            <select name="gender" id="gender" required
-                                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                                <option value="">{{ __('Select Gender') }}</option>
-                                <option value="male" {{ old('gender') == 'Male' ? 'selected' : '' }}>{{ __('Male') }}</option>
-                                <option value="female" {{ old('gender') == 'Female' ? 'selected' : '' }}>{{ __('Female') }}</option>
-                            </select>
-                            <x-input-error :messages="$errors->get('gender')" class="mt-2"/>
-                        </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Assessment No:</span>
+                    <input name="assessment_no" placeholder="Enter Assessment No" value="{{old('assessment_no')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('assessment_no')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                        <div class="mb-4">
-                            <label for="dob" class="block text-sm font-medium text-gray-700">{{ __('Date of Birth') }}</label>
-                            <input type="date" name="dob" id="dob" value="{{ old('dob') }}" required
-                                   class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <x-input-error :messages="$errors->get('dob')" class="mt-2"/>
-                        </div>
-                    </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Admission No:</span>
+                    <input name="admission_no" placeholder="Enter Admission No" value="{{old('admission_no')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('admission_no')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                <div class="col-span-1">
-                    <div class="mb-4">
-                        <label for="birth_cert_no" class="block text-sm font-medium text-gray-700">{{ __('Birth Certificate Number') }}</label>
-                        <input type="text" name="birth_cert_no" id="birth_cert_no" value="{{ old('birth_cert_no') }}" required
-                               class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                        <x-input-error :messages="$errors->get('birth_cert_no')" class="mt-2"/>
-                    </div>
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Gender
+                    </span>
+                    <select name="gender" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
 
-                    <div class="mb-4">
-                        <label for="nationality" class="block text-sm font-medium text-gray-700">{{ __('Nationality') }}</label>
-                        <select name="nationality" id="nationality" required
-                                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <option value="">{{ __('Select Nationality') }}</option>
-                            <option value="citizen" {{ old('nationality') == 'citizen' ? 'selected' : '' }}>Citizen</option>
-                            <option value="non-citizen" {{ old('nationality') == 'non-citizen' ? 'selected' : '' }}>Non-Citizen</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('nationality')" class="mt-2"/>
-                    </div>
+                        <option>- select gender - </option>
+                        <option value="male">Male</option>
+                        <option value="male">Female</option>
 
+                    </select>
+                </label>
+                @error('gender')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                    <div class="mb-4">
-                        <label for="nemis_code" class="block text-sm font-medium text-gray-700">{{ __('NEMIS Code') }}</label>
-                        <input type="text" name="nemis_code" id="nemis_code" value="{{ old('nemis_code') }}"
-                               class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                        <x-input-error :messages="$errors->get('nemis_code')" class="mt-2"/>
-                    </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">DOB</span>
+                    <input type="date" name="dob" placeholder="Enter date" value="{{old('dob')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('dob')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                    <div class="mb-4">
-                        <label for="doa" class="block text-sm font-medium text-gray-700">{{ __('Date of Admission') }}</label>
-                        <input type="date" name="doa" id="doa" value="{{ old('doa') }}" required
-                               class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                        <x-input-error :messages="$errors->get('doa')"
-                        class="mt-2"/>
-                    </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">BC_PP Entry No</span>
+                    <input name="bc_pp_entry_no" placeholder="Enter bc pp entry No" value="{{old('bc_pp_entry_no')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('bc_pp_entry_no')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
-                    <div class="mb-4">
-                        <label for="contact" class="block text-sm font-medium text-gray-700">{{ __('Contact') }}</label>
-                        <input type="text" name="contact" id="contact" value="{{ old('contact') }}" required
-                               class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                        <x-input-error :messages="$errors->get('contact')" class="mt-2"/>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="school_class_id" class="block text-sm font-medium text-gray-700">{{ __('Class') }}</label>
-                        <select name="stream_id" id="stream_id" required
-                                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <option value="">{{ __('Select Class') }}</option>
-                            @foreach($classes as $class)
-                                <option value="{{ $class['id'] }}" {{ old('stream_id') == $class['id'] ? 'selected' : '' }}>{{ $class['name'] }}</option>
-                            @endforeach
-                        </select>
-                        <x-input-error :messages="$errors->get('stream_id')" class="mt-2"/>
-                    </div>
-
-
-                    <div class="mb-4">
-                        <label for="status" class="block text-sm font-medium text-gray-700">{{ __('Status') }}</label>
-                        <select name="status" id="status" required class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                            <option value="transferred" {{ old('status') == 'transferred' ? 'selected' : '' }}>Transferred</option>
-                            <option value="suspended" {{ old('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('status')" class="mt-2"/>
-                    </div>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Nationality</span>
+                    <input name="nationality" placeholder="Enter Nationality " value="{{old('nationality')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('nationality')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
 
-                    <x-primary-button class="mt-4">{{ __('Add Learner') }}</x-primary-button>
-                </div>
-            </form>
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Nemis Code</span>
+                    <input name="nemis_code" placeholder="Enter Nemis_Code No" value="{{old('nemis_code')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('nemis_code')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+
+
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Date Of Addmision</span>
+                    <input type="date" name="date_of_addmission" value="{{old('date_of_addmission')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('date_of_addmission')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="my-4">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Contact Person</span>
+                    <input name="contact" placeholder="Enter Contact Person No" value="{{old('contact')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+                </label>
+                @error('contact')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-    </div>
+        <button class="p-2 bg-purple-600 ml-1 w-56 text-white hover:bg-purple-700 type=" submit">Submit</button>
+
+    </form>
 </div>
-</x-app-layout>
+@endsection
