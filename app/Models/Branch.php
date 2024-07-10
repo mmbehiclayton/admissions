@@ -13,6 +13,6 @@ class Branch extends Model
     protected $table = 'branches';
 
     public function classes(){
-        return $this->hasMany(Classes::class);
+        return $this->hasMany(Classes::class, 'branch_id');
     }
 }

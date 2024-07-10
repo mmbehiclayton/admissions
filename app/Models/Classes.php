@@ -11,12 +11,12 @@ class Classes extends Model
 
     public function streams()
     {
-        return $this->hasMany(Streams::class);
+        return $this->hasMany(Streams::class, 'classes_id');
     }
     
     public function branches()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 
     public function learners(){

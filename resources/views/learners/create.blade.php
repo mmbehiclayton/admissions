@@ -61,9 +61,9 @@
                     </span>
                     <select name="gender" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
 
-                        <option>- select gender - </option>
-                        <option value="male">Male</option>
-                        <option value="male">Female</option>
+                        <option>- Select Gender - </option>
+                        <option value="Male">Male</option>
+                        <option value="Fale">Female</option>
 
                     </select>
                 </label>
@@ -92,10 +92,18 @@
                 @enderror
             </div>
 
-            <div class="my-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-                    <input name="nationality" placeholder="Enter Nationality " value="{{old('nationality')}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Nationality
+                    </span>
+                    <select name="nationality" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+
+                        <option>- Select Nationality - </option>
+                        <option value="Citizen">Citizen</option>
+                        <option value="Non-Citizen">Non-Citizen</option>
+
+                    </select>
                 </label>
                 @error('nationality')
                 <div class="text-red-500">{{ $message }}</div>

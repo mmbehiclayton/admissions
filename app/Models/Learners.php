@@ -10,12 +10,27 @@ class Learners extends Model
     use HasFactory;
     protected $table = 'students';
 
+    protected $fillable = [
+        'stream_id',
+        'assessment_no',
+        'name',
+        'admission_no',
+        'gender',
+        'dob',
+        'bc_pp_entry_no',
+        'nationality',
+        'nemis_code',
+        'date_of_addmission',
+        'contact',
+
+    ];
+
     public function streams(){
-        return $this->belongsTo(Streams::class);
+        return $this->belongsTo(Streams::class, 'stream_id');
     }
 
     public function classes(){
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'classes_id');
     }
 
     public function branches() {

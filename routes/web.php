@@ -20,8 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('learners.upload');
+Route::post('/learners/bulk-upload', [LearnersController::class, 'bulkUpload'])->name('learners.bulkUpload');
+Route::get('/classes/active', [ClassesController::class, 'activeClasses'])->name('classes.active');
 
-Route::get('/', HomeController::class)->name('home');
+Route::get('/', HomeController::class)->name('home')->middleware('auth');
 Route::resource('roles', RolesController::class)->middleware('auth');
 Route::resource('branches', BranchesController::class)->middleware('auth');
 Route::resource('classes', ClassesController::class)->middleware('auth');

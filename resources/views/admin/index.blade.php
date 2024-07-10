@@ -7,7 +7,7 @@
   <!-- CTA -->
   <div style="border-radius: 5px;" class="bg-purple-600 py-5" >
       <h1 style="font-family: Lora, serif;" class="text-3xl  font-semibold text-white dark:text-gray-100 mx-11">
-   Good Morning {{Auth::user()->name}}, 
+   Welcome {{Auth::user()->name}}, 
   </h1>
   </div>
 </div>

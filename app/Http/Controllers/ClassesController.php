@@ -114,4 +114,5 @@ class ClassesController extends Controller
         $class->delete();
         return redirect(route('classes.index'))->with('success', 'succesfully deleted class data');
     }
+
 }

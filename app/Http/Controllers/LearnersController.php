@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\Learners;
 use App\Models\Streams;
+use App\Imports\LearnersImport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LearnersController extends Controller
 {
@@ -52,15 +54,15 @@ class LearnersController extends Controller
         $request->validate([
             'stream_id' => 'required',
             'name' => 'required',
-            'assessment_no' => 'required',
+            'assessment_no' => 'required|unique:students,assessment_no',
             'gender' => 'required',
             'dob' => 'required|date',
-            'bc_pp_entry_no' => 'required',
+            'bc_pp_entry_no' => 'required|unique:students,bc_pp_entry_no', 
             'nationality' => 'required',
-            'nemis_code' => 'required',
+            'nemis_code' => 'required|unique:students,nemis_code',
             'date_of_addmission' => 'required',
             'contact' => 'required',
-            'admission_no' => 'required'    
+            'admission_no' => 'required|unique:students,admission_no'    
         ]);
 
         $learner = new Learners();
@@ -159,4 +161,26 @@ class LearnersController extends Controller
         return redirect(route('learners.index'))->with('success', 'Learner deleted successfully !');
 
     }
+    public function upload()
+    {
+        return view('learners.upload');
+    }
+
+    public function bulkUpload(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'file' => [
+                'required',
+                'file'
+            ],
+        ]);
+
+        Excel::import(new LearnersImport, $request->file('file'));
+
+        
+        return redirect()->route('learners.index')->with('success', 'Learners uploaded successfully');
+    }
+
+
 }

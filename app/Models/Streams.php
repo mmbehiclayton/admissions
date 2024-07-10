@@ -12,7 +12,7 @@ class Streams extends Model
     protected $table = 'stream';
 
     public function classes(){
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'classes_id');
     }
     public function learners(){
         return $this->hasMany(Learners::class);

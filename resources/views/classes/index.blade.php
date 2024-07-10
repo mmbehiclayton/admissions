@@ -22,7 +22,7 @@
 
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3 text-sm">{{$class->name}}</td>
-                        <td class="px-4 py-3 text-sm">{{$class->branches->name}}</td>
+                        <td class="px-4 py-3 text-sm">{{ $class->branches ? $class->branches->name : 'No Branch' }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 <div class="col-sm">

@@ -64,8 +64,8 @@
                     <select name="gender" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
 
                         <option>{{$learner->gender}} </option>
-                        <option value="male">Male</option>
-                        <option value="male">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
 
                     </select>
                 </label>

@@ -1,10 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
+
 <div class="flex justify-between items-center mr-5 mt-5">
     <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
-    <a href="{{route('learners.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> <i class="fas fa-user-edit"></i> Add learner</a>
+    <div class="flex space-x-4">
+        <a href="{{route('learners.upload')}}" class="bg-blue-500 text-white px-4 py-2 rounded text"> <i class="fas fa-download"></i> Import</a>
+        <a href="{{route('learners.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> <i class="fas fa-user-edit"></i> Add Learner</a>
+    </div>
 </div>
+
 <section class="px-10 ">
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"></h4>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -12,16 +17,16 @@
             <table id="table1" class="w-full whitespace-no-wrap ">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Stream</th>
+                        <th class="px-4 py-3">Class</th>
                         <th class="px-4 py-3">Assessment No</th>
-                        <th class="px-4 py-3">Name</th>
-                        <th class="px-4 py-3">Admission No</th>
+                        <th class="px-4 py-3">Full Name</th>
+                        <th class="px-4 py-3">Adm No</th>
                         <th class="px-4 py-3">Gender</th>
                         <th class="px-4 py-3">DOB</th>
-                        <th class="px-4 py-3">BC PP Entry No</th>
+                        <th class="px-4 py-3">B/C No</th> 
                         <th class="px-4 py-3">Nationality</th>
-                        <th class="px-4 py-3">Nemis Code</th>
-                        <th class="px-4 py-3">Date Of Addmission</th>
+                        <th class="px-4 py-3">Nemis</th>
+                        <th class="px-4 py-3">DOA</th> 
                         <th class="px-4 py-3">Contact</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Actions</th>
@@ -37,11 +42,11 @@
                         <td class="px-4 py-3 text-sm">{{$learner->admission_no}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->gender}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->dob}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->bc_pp_entry_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->nationality}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->nemis_code}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->date_of_addmission}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->contact}}</td>
+                        <td class="px-4 py-3 text-sm">{{$learner->bc_pp_entry_no}}</td> 
+                        <td class="px-4 py-3 text-sm">{{$learner->nationality}}</td> 
+                        <td class="px-4 py-3 text-sm">{{$learner->nemis_code}}</td> 
+                        <td class="px-4 py-3 text-sm">{{$learner->date_of_addmission}}</td> 
+                        <td class="px-4 py-3 text-sm">{{$learner->contact}}</td> 
                         @if ($learner->status == 'active')
                         <td class="px-4 py-3 text-sm "> <span class="bg-green-700 h-3 text-white p-1 pl-3 pr-3"> Active</span></td>
                         @elseif($learner->status == 'transffered')
@@ -66,6 +71,7 @@
                                 </div>
                             </div>
                         </td>
+
                         <!-- Delete modal -->
                         <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
                             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-1/3">
