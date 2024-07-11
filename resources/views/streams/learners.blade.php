@@ -9,16 +9,29 @@
     </div>
 </div>
 
-<section class="px-10 ">
+<div class="flex justify-between items-center mt-5 px-10">
+    <form method="GET" action="{{ route('streams.learners', $stream->id) }}" class="flex items-center">
+        <label for="per_page" class="mr-2 text-gray-700 dark:text-gray-300">Show</label>
+        <select name="per_page" id="per_page" class="form-select" onchange="this.form.submit()">
+            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+            <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+            <option value="75" {{ request('per_page') == 75 ? 'selected' : '' }}>75</option>
+            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+        </select>
+        <span class="ml-2 text-gray-700 dark:text-gray-300">records</span>
+    </form>
+</div>
+
+<section class="px-10 mt-5">
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"></h4>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
-        <div class="w-full overflow-x-auto ">
-            <table id="table1" class="w-full whitespace-no-wrap ">
+        <div class="w-full overflow-x-auto">
+            <table id="table1" class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3"><input type="checkbox" id="selectAll"></th>
                         <th class="px-4 py-3">No.</th>
-                        <th class="px-4 py-3">Class</th>
                         <th class="px-4 py-3">Assessment No</th>
                         <th class="px-4 py-3">Full Name</th>
                         <th class="px-4 py-3">Adm No</th>
@@ -37,8 +50,7 @@
                     @foreach ($learners as $index => $learner)
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3"><input type="checkbox" class="selectItem" value="{{ $learner->id }}"></td>
-                        <td class="px-4 py-3 text-sm">{{ $index + 1 }}</td>
-                        <td class="px-4 py-3 text-sm"> {{$learner->streams->classes->name}} {{$learner->streams->name}}</td>
+                        <td class="px-4 py-3 text-sm">{{ ($learners->currentPage() - 1) * $learners->perPage() + $index + 1 }}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->assessment_no}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->name}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->admission_no}}</td>
@@ -50,11 +62,11 @@
                         <td class="px-4 py-3 text-sm">{{$learner->date_of_addmission}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->contact}}</td>
                         @if ($learner->status == 'active')
-                        <td class="px-4 py-3 text-sm "> <span class="bg-green-700 h-3 text-white p-1 pl-3 pr-3"> Active</span></td>
+                        <td class="px-4 py-3 text-sm"><span class="bg-green-700 h-3 text-white p-1 pl-3 pr-3">Active</span></td>
                         @elseif($learner->status == 'transferred')
-                        <td class="px-4 py-3 text-sm"> <span class="bg-gray-400 h-3 text-black p-1 pl-3 pr-3"> Transferred</span></td>
+                        <td class="px-4 py-3 text-sm"><span class="bg-gray-400 h-3 text-black p-1 pl-3 pr-3">Transferred</span></td>
                         @else
-                        <td class="px-4 py-3 text-sm"> <span class="bg-red-700 h-3 text-white p-1 pl-3 pr-3"> Inactive</span></td>
+                        <td class="px-4 py-3 text-sm"><span class="bg-red-700 h-3 text-white p-1 pl-3 pr-3">Inactive</span></td>
                         @endif
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
@@ -101,7 +113,7 @@
             </table>
         </div>
         <div class="mt-2 p-2">
-            {{$learners->links()}}
+            {{$learners->appends(['per_page' => request('per_page')])->links()}}
         </div>
     </div>
 </section>
