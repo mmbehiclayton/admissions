@@ -27,6 +27,22 @@ class StreamController extends Controller
 
         return  view('streams.index', $pageData);
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function showAllStreams()
+    {
+        // Retrieve all streams
+        $streams = Streams::with('classes')->get();
+
+        // Pass data to the view
+        $pageData = [
+            'title' => 'All Streams',
+            'streams' => $streams
+        ];
+
+        return view('streams.all', $pageData);
+    }
 
     /**
      * Show the form for creating a new resource.
