@@ -26,7 +26,7 @@
                     @empty
                     <tr>
                         <td colspan="3" class="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-400">
-                            No active classes at the moment.
+                            No active classes at the moment please. Add classes
                         </td>
                     </tr>
                     @endforelse
