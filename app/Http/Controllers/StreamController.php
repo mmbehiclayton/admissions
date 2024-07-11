@@ -53,7 +53,7 @@ class StreamController extends Controller
         $pageData = [
             'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
-            'learners' => $stream->learners
+            'learners' => $stream->learners()->paginate(10) // Paginate learners
         ];
 
         return view('streams.learners', $pageData);
