@@ -15,7 +15,7 @@ class Streams extends Model
         return $this->belongsTo(Classes::class, 'classes_id');
     }
     public function learners(){
-        return $this->hasMany(Learners::class);
+        return $this->hasMany(Learners::class, 'stream_id');
     }
 
     

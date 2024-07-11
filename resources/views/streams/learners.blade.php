@@ -1,4 +1,4 @@
-<!-- resources/views/streams/all.blade.php -->
+<!-- resources/views/streams/learners.blade.php -->
 @extends('layouts.admin')
 @section('content')
 
@@ -12,17 +12,13 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Stream</th>
+                        <th class="px-4 py-3">Learner Name</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach ($streams as $stream)
+                    @foreach ($learners as $learner)
                     <tr class="text-gray-700 dark:text-gray-400">
-                        <td class="px-4 py-3 text-sm">
-                            <a href="{{ route('streams.learners', $stream->id) }}" class="text-blue-500 hover:underline">
-                                {{ $stream->classes->name }} {{ $stream->name }}
-                            </a>
-                        </td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->name }}</td>
                     </tr>
                     @endforeach
                 </tbody>

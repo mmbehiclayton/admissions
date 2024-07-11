@@ -24,6 +24,7 @@ Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('lea
 Route::post('/learners/bulk-upload', [LearnersController::class, 'bulkUpload'])->name('learners.bulkUpload');
 Route::get('/classes/active', [ClassesController::class, 'activeClasses'])->name('classes.active');
 Route::get('/streams/all', [StreamController::class, 'showAllStreams'])->name('streams.all');
+Route::get('/streams/{stream_id}/learners', [StreamController::class, 'showLearners'])->name('streams.learners');
 
 Route::get('/', HomeController::class)->name('home')->middleware('auth');
 Route::resource('roles', RolesController::class)->middleware('auth');

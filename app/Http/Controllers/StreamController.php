@@ -44,6 +44,21 @@ class StreamController extends Controller
         return view('streams.all', $pageData);
     }
 
+    public function showLearners($stream_id)
+    {
+        // Retrieve the stream with learners
+        $stream = Streams::with('learners')->findOrFail($stream_id);
+
+        // Pass data to the view
+        $pageData = [
+            'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
+            'stream' => $stream,
+            'learners' => $stream->learners
+        ];
+
+        return view('streams.learners', $pageData);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
