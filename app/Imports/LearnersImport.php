@@ -18,10 +18,10 @@ class LearnersImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) 
         {
             // Convert 'dob' to a Carbon object and format it
-            $dob = isset($row['dob']) && !empty($row['dob']) ? Carbon::parse($row['dob'])->format('d-m-Y') : null;
+            $dob = isset($row['dob']) && !empty($row['dob']) ? Carbon::parse($row['dob'])->format('Y-m-d') : null;
 
             // Convert 'date_of_admission' to a Carbon object and format it
-            $dateOfAdmission = isset($row['date_of_addmission']) && !empty($row['date_of_addmission']) ? Carbon::parse($row['date_of_addmission'])->format('d-m-Y') : null;
+            $dateOfAdmission = isset($row['date_of_addmission']) && !empty($row['date_of_addmission']) ? Carbon::parse($row['date_of_addmission'])->format('Y-m-d') : null;
 
             // Create the Learners entry
             Learners::create([

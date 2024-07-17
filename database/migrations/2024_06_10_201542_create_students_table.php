@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('bc_pp_entry_no');
             $table->string('nationality');
             $table->string('nemis_code');
-            $table->string('date_of_addmission');
+            $table->date('date_of_admission')->nullable()->change();
             $table->string('contact');
             $table->timestamps();
         });
