@@ -60,7 +60,7 @@ class LearnersController extends Controller
             'bc_pp_entry_no' => 'required|unique:students,bc_pp_entry_no', 
             'nationality' => 'required',
             'nemis_code' => 'required|unique:students,nemis_code',
-            'date_of_addmission' => 'required',
+            'date_of_addmission' => 'required|date',
             'contact' => 'nullable',
             'admission_no' => 'required|unique:students,admission_no'    
         ]);

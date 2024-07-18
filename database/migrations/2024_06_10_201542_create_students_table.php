@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('admission_no');
             $table->string('gender');
-            $table->string('dob');
+            $table->date('dob');
             $table->string('bc_pp_entry_no');
             $table->string('nationality');
             $table->string('nemis_code');
