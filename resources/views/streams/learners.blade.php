@@ -10,16 +10,28 @@
 </div>
 
 <div class="flex justify-between items-center mt-5 px-10">
-    <form method="GET" action="{{ route('streams.learners', $stream->id) }}" class="flex items-center">
-        <label for="per_page" class="mr-2 text-gray-700 dark:text-gray-300">Show</label>
-        <select name="per_page" id="per_page" class="form-select" onchange="this.form.submit()">
-            <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-            <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-            <option value="75" {{ request('per_page') == 75 ? 'selected' : '' }}>75</option>
-            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
-        </select>
-        <span class="ml-2 text-gray-700 dark:text-gray-300">records</span>
+    <form method="GET" action="{{ route('streams.learners', $stream->id) }}" class="flex items-center space-x-4">
+        <div class="flex items-center">
+            <label for="per_page" class="mr-2 text-gray-700 dark:text-gray-300">Show</label>
+            <select name="per_page" id="per_page" class="form-select" onchange="this.form.submit()">
+                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                <option value="75" {{ request('per_page') == 75 ? 'selected' : '' }}>75</option>
+                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+            </select>
+            <span class="ml-2 text-gray-700 dark:text-gray-300">records</span>
+        </div>
+        
+        <div class="flex items-center">
+            <label for="status" class="mr-2 text-gray-700 dark:text-gray-300">Status</label>
+            <select name="status" id="status" class="form-select" onchange="this.form.submit()">
+                <option value="">All</option>
+                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                <option value="transferred" {{ request('status') == 'transferred' ? 'selected' : '' }}>Transferred</option>
+                <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+            </select>
+        </div>
     </form>
 </div>
 
@@ -113,7 +125,7 @@
             </table>
         </div>
         <div class="mt-2 p-2">
-            {{$learners->appends(['per_page' => request('per_page')])->links()}}
+            {{$learners->appends(['per_page' => request('per_page'), 'status' => request('status')])->links()}}
         </div>
     </div>
 </section>
