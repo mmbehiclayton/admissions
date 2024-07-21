@@ -41,13 +41,29 @@
                     @foreach ($learners as $learner)
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3 text-sm"> {{$learner->streams->classes->name}} {{$learner->streams->name}}</td>
+                        @if ($learner->assessment_no == 'None')
+                        <td class="px-4 py-3 text-xs">
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                None
+                            </span>
+                        </td>
+                        @elseif($learner->assessment_no == 'EQUATION')
+                        <td class="px-4 py-3 text-xs">
+                            <span
+                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                Equation
+                            </span>
+                        </td>
+                        @else
                         <td class="px-4 py-3 text-sm">{{$learner->assessment_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->name}}</td>
+                        @endif
+                        <td class="px-4 py-3 text-sm">{{ ucwords(strtolower($learner->name)) }}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->admission_no}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->gender}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->dob}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->bc_pp_entry_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->nationality}}</td>
+                        <td class="px-4 py-3 text-sm">{{ ucwords(strtolower($learner->nationality)) }}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->nemis_code}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->date_of_addmission}}</td>
                         <td class="px-4 py-3 text-sm">{{$learner->contact}}</td>
