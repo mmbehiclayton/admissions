@@ -5,13 +5,13 @@
     <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
     <div class="flex space-x-4">
         <a href="{{route('learners.upload')}}" class="bg-blue-500 text-white px-4 py-2 rounded text"> 
-            <i class="fas fa-upload"></i> Upload
+            <i class="fas fa-upload"></i>
         </a>
         <a href="{{route('learners.export')}}" class="bg-blue-500 text-white px-4 py-2 rounded text"> 
-            <i class="fas fa-download"></i> Download
+            <i class="fas fa-download"></i>
         </a>
         <a href="{{route('learners.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> 
-            <i class="fas fa-user-edit"></i> Add Learner
+            <i class="fas fa-user-edit"></i>
         </a>
     </div>
 </div>

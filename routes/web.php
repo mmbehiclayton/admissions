@@ -20,8 +20,9 @@ use App\Exports\AllLearnersExport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('learners/export/', function (){
-    return Excel::download(new AllLearnersExport, 'learners.xlsx');
+
+Route::get('/', [LearnersController::class, 'dashboard']);
+Route::get('learners/export/', function (){return Excel::download(new AllLearnersExport, 'learners.xlsx');
 })->name('learners.export');
 Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('learners.upload');
 Route::post('/learners/bulk-upload', [LearnersController::class, 'bulkUpload'])->name('learners.bulkUpload');

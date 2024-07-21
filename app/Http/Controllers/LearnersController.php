@@ -188,5 +188,28 @@ class LearnersController extends Controller
         return Excel::download(new AllLearnersExport, 'alllearners.xlsx');
     }
 
+    /**
+     * Display statistics of learners.
+     */
+    // app/Http/Controllers/LearnersController.php
+
+    public function dashboard()
+    {
+        $totalLearners = Learners::count();
+        $learnersWithoutNemisCode = Learners::whereNull('nemis_code')->count();
+        $learnersInactive = Learners::where('status', 'inactive')->count();
+        $learnersTransferred = Learners::where('status', 'Transferred')->count();
+
+        $pageData = [
+            'totalLearners' => $totalLearners,
+            'learnersWithoutNemisCode' => $learnersWithoutNemisCode,
+            'learnersInactive' => $learnersInactive,
+            'learnersTransferred' => $learnersTransferred,
+        ];
+
+        return view('admin.index', $pageData);
+    }
+
+
 
 }
