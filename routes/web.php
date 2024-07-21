@@ -8,6 +8,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StreamController;
 use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
+use App\Exports\AllLearnersExport;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('learners/export/', function (){
+    return Excel::download(new AllLearnersExport, 'learners.xlsx');
+})->name('learners.export');
 Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('learners.upload');
 Route::post('/learners/bulk-upload', [LearnersController::class, 'bulkUpload'])->name('learners.bulkUpload');
 Route::get('/classes/active', [ClassesController::class, 'activeClasses'])->name('classes.active');

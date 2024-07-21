@@ -182,5 +182,11 @@ class LearnersController extends Controller
         return redirect()->route('learners.index')->with('success', 'Learners uploaded successfully');
     }
 
+    //export learners
+    public function export() 
+    {
+        return Excel::download(new AllLearnersExport, 'alllearners.xlsx');
+    }
+
 
 }

@@ -3,13 +3,22 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'bed060e6f0b210965d411a6fa201fce5b67b394c',
+        'reference' => '67cca1291f3447c44db5cf6a32e6d37cd7e323fe',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'abbasudo/laravel-purity' => array(
+            'pretty_version' => 'v3.3.2',
+            'version' => '3.3.2.0',
+            'reference' => '5dc70b98c6548e56a175c9702566e86962354b51',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../abbasudo/laravel-purity',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.12.1',
             'version' => '0.12.1.0',
@@ -400,7 +409,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'bed060e6f0b210965d411a6fa201fce5b67b394c',
+            'reference' => '67cca1291f3447c44db5cf6a32e6d37cd7e323fe',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
