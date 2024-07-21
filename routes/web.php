@@ -21,7 +21,7 @@ use App\Exports\AllLearnersExport;
 |
 */
 
-Route::get('/', [LearnersController::class, 'dashboard']);
+
 Route::get('learners/export/', function (){return Excel::download(new AllLearnersExport, 'learners.xlsx');
 })->name('learners.export');
 Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('learners.upload');

@@ -49,7 +49,7 @@
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                  789
+                  {{$totalLearners}}
                   </p>
                 </div>
               </div>
@@ -74,7 +74,7 @@
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                  5
+                  {{$learnersTransferred}}
                   </p>
                 </div>
               </div>
@@ -99,7 +99,7 @@
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                    37
+                    {{$learnersInactive}}
                   </p>
                 </div>
               </div>
@@ -125,7 +125,7 @@
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                    35
+                    {{$learnersWithoutNemisCode}}
                   </p>
                 </div>
               </div>

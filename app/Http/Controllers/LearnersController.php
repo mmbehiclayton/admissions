@@ -147,7 +147,7 @@ class LearnersController extends Controller
         $learner->status = $request->input('status');
         $learner->update();
 
-        return redirect(route('learners.index'))->with('success', 'Learner updated successfully !');
+        return redirect(route('streams.learners', $learner->stream_id))->with('success', 'Learner updated successfully !');
     }
 
     /**
@@ -193,23 +193,7 @@ class LearnersController extends Controller
      */
     // app/Http/Controllers/LearnersController.php
 
-    public function dashboard()
-    {
-        $totalLearners = Learners::count();
-        $learnersWithoutNemisCode = Learners::whereNull('nemis_code')->count();
-        $learnersInactive = Learners::where('status', 'inactive')->count();
-        $learnersTransferred = Learners::where('status', 'Transferred')->count();
-
-        $pageData = [
-            'totalLearners' => $totalLearners,
-            'learnersWithoutNemisCode' => $learnersWithoutNemisCode,
-            'learnersInactive' => $learnersInactive,
-            'learnersTransferred' => $learnersTransferred,
-        ];
-
-        return view('admin.index', $pageData);
-    }
-
+    
 
 
 }
