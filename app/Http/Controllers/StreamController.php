@@ -53,7 +53,7 @@ class StreamController extends Controller
         $pageData = [
             'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
-            'learners' => $stream->learners()->paginate(50) // Paginate learners with default of 50 per page
+            'learners' => $stream->learners()->paginate(10) // Paginate learners with default of 10 per page
         ];
 
         return view('streams.learners', $pageData);
@@ -62,7 +62,7 @@ class StreamController extends Controller
     // pagination
     public function showStreamLearners(Request $request, $streamId)
     {
-        $perPage = $request->input('per_page', 50); // Default to 50 records per page, can be adjusted via query param
+        $perPage = $request->input('per_page', 10); // Default to 10 records per page, can be adjusted via query param
         $stream = Streams::with('learners')->findOrFail($streamId);
         $learners = $stream->learners()->paginate($perPage);
 

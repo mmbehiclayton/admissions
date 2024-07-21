@@ -34,24 +34,6 @@ Route::resource('learners', LearnersController::class)->middleware('auth');
 Route::resource('streams', StreamController::class)->middleware('auth');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //dashboard routes
 // Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard', 'as' => 'admin.'], function () {
     //single action controllers
