@@ -1,11 +1,16 @@
 @extends('layouts.admin')
-@section('content')
 
+@section('content')
+<div class="container px-6 mx-auto grid">
 <div class="flex justify-between items-center mr-5 mt-5">
-    <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
+    <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{ $title }}</h2>
     <div class="flex space-x-4">
-        <a href="{{route('learners.upload')}}" class="bg-blue-500 text-white px-4 py-2 rounded text"> <i class="fas fa-download"></i> Import</a>
-        <a href="{{route('learners.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> <i class="fas fa-user-edit"></i> Add Learner</a>
+        <a href="{{ route('learners.upload') }}" class="bg-blue-500 text-white px-4 py-2 rounded text"> 
+            <i class="fas fa-download"></i> Import
+        </a>
+        <a href="{{ route('learners.create') }}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> 
+            <i class="fas fa-user-edit"></i> Add Learner
+        </a>
     </div>
 </div>
 
@@ -62,38 +67,31 @@
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3"><input type="checkbox" class="selectItem" value="{{ $learner->id }}"></td>
                         <td class="px-4 py-3 text-sm">{{ ($learners->currentPage() - 1) * $learners->perPage() + $index + 1 }}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->assessment_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->name}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->admission_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->gender}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->dob}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->bc_pp_entry_no}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->nationality}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->nemis_code}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->date_of_addmission}}</td>
-                        <td class="px-4 py-3 text-sm">{{$learner->contact}}</td>
-                        @if ($learner->status == 'active')
+                        <td class="px-4 py-3 text-sm">{{ $learner->assessment_no }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->name }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->admission_no }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->gender }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->dob }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->bc_pp_entry_no }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->nationality }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->nemis_code }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->date_of_addmission }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->contact }}</td>
                         <td class="px-4 py-3 text-xs">
-                            <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                            @if ($learner->status == 'active')
+                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                                 Active
                             </span>
-                        </td>
-                        @elseif($learner->status == 'transferred')
-                        <td class="px-4 py-3 text-xs">
-                            <span
-                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                            @elseif($learner->status == 'transferred')
+                            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
                                 Transferred
                             </span>
-                        </td>
-                        @else
-                        <td class="px-4 py-3 text-xs">
-                            <span
-                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                            @else
+                            <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
                                 Inactive
                             </span>
+                            @endif
                         </td>
-                        @endif
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 <a href="{{ route('learners.edit', $learner->id) }}" class="p-2 pr-3 bg-transparent hover:bg-purple-600 hover:text-white cursor-pointer dark:bg-gray-700 dark:hover:bg-purple-600 dark:text-gray-300 dark:hover:text-white">
@@ -108,41 +106,42 @@
                                 </button>
                             </div>
                         </td>
-
-                        <!-- Delete modal -->
-                        <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-1/3">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg font-semibold dark:text-white">Confirm Delete</h3>
-                                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-                                        <i class="fa-solid fa-times"></i>
-                                    </button>
-                                </div>
-
-                                <div class="mt-4 flex items-center">
-                                    <i class="fa-solid fa-exclamation-triangle text-red-600 text-2xl mr-3"></i>
-                                    <p class="dark:text-gray-300">Are you sure you want to delete this learner?</p>
-                                </div>
-                                <div class="mt-4 flex justify-end">
-                                    <button id="cancelBtn" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
-                                    <form id="deleteForm" method="POST" action="{{route('learners.destroy', $learner->id)}}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Delete</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
         <div class="mt-2 p-2">
-            {{$learners->appends(['per_page' => request('per_page'), 'status' => request('status')])->links()}}
+            {{ $learners->appends(['per_page' => request('per_page'), 'status' => request('status')])->links() }}
         </div>
     </div>
 </section>
+
+<!-- Delete modal -->
+<div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-1/3">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold dark:text-white">Confirm Delete</h3>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+
+        <div class="mt-4 flex items-center">
+            <i class="fa-solid fa-exclamation-triangle text-red-600 text-2xl mr-3"></i>
+            <p class="dark:text-gray-300">Are you sure you want to delete this learner?</p>
+        </div>
+        <div class="mt-4 flex justify-end">
+            <button id="cancelBtn" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+            <form id="deleteForm" method="POST" action="">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 
 <script>
     document.getElementById('selectAll').addEventListener('change', function() {

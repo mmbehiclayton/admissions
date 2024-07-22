@@ -23,11 +23,17 @@ class HomeController extends Controller
         $learnersInactive = Learners::where('status', 'inactive')->count();
         $learnersTransferred = Learners::where('status', 'Transferred')->count();
 
+        // Get the most recently added or updated learners, limited to 10
+        $recentLearners = Learners::latest('updated_at')
+            ->take(10)
+            ->get();
+
         $pageData = [
             'totalLearners' => $totalLearners,
             'learnersWithoutNemisCode' => $learnersWithoutNemisCode,
             'learnersInactive' => $learnersInactive,
             'learnersTransferred' => $learnersTransferred,
+            'recentLearners' => $recentLearners, 
         ];
 
        
