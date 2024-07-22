@@ -40,7 +40,6 @@
     </form>
 </div>
 
-<section class="px-10 mt-5">
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table id="table1" class="w-full whitespace-no-wrap">
@@ -115,7 +114,8 @@
             {{ $learners->appends(['per_page' => request('per_page'), 'status' => request('status')])->links() }}
         </div>
     </div>
-</section>
+</div>
+
 
 <!-- Delete modal -->
 <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
