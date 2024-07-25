@@ -1,27 +1,41 @@
 <?php
+
 namespace App\Exports;
 
 use App\Models\Learners;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-class AllLearnersExport implements FromCollection, WithHeadings, WithMapping
+class StreamLearnersExport implements FromCollection, WithHeadings, WithMapping
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+
+    protected $streamId;
+
+    public function __construct($streamId)
     {
-        return Learners::with('streams.classes')->get();
+        $this->streamId = $streamId;
     }
 
     /**
-    * @return array
-    */
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection()
+    {
+        return Learners::where('stream_id', $this->streamId)
+                       ->with('streams.classes')
+                       ->get();
+    }
+
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [
+            'ID',
             'Class and Stream',
             'Assessment No',
             'Name',
@@ -41,12 +55,13 @@ class AllLearnersExport implements FromCollection, WithHeadings, WithMapping
     }
 
     /**
-    * @param mixed $learner
-    * @return array
-    */
+     * @param mixed $learner
+     * @return array
+     */
     public function map($learner): array
     {
         return [
+            $learner->id,
             ($learner->streams->classes->name ?? 'N/A') . ' ' . ($learner->streams->name ?? 'N/A'), // Display class and stream name
             $learner->assessment_no,
             $learner->name,
@@ -63,5 +78,23 @@ class AllLearnersExport implements FromCollection, WithHeadings, WithMapping
             $learner->status,
             // Add other relevant fields based on your Learners model
         ];
+    }
+
+    /**
+     * Generate the file name for the export.
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        // Retrieve the first learner to get class and stream names
+        $learner = Learners::where('stream_id', $this->streamId)
+                           ->with('streams.classes')
+                           ->first();
+
+        $className = $learner->streams->classes->name ?? 'ClassName';
+        $streamName = $learner->streams->name ?? 'StreamName';
+
+        return "{$className}_{$streamName}_Class_List.xlsx";
     }
 }

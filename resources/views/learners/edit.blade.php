@@ -17,14 +17,17 @@
                     </span>
                     <select name="stream_id" id="select" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         @foreach ($streams as $stream)
-                        <option value="{{$stream->id}}">{{$stream->classes->name}} {{$stream->name}}</option>
+                            <option value="{{ $stream->id }}" {{ $stream->id == $learner->stream_id ? 'selected' : '' }}>
+                                {{ $stream->classes->name }} {{ $stream->name }}
+                            </option>
                         @endforeach
                     </select>
                 </label>
                 @error('stream_id')
-                <div class="text-red-500">{{ $message }}</div>
+                    <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+
 
             <div class="my-4">
                 <label class="block text-sm">
@@ -145,7 +148,6 @@
 
                         <option>{{$learner->status !== null ? $learner->status : '- select status - '}}</option>
                         <option value="active">Active</option>
-                        <option value="transffered">Transffered</option>
                         <option value="inactive">Inactive</option>
 
                     </select>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StreamLearnersExport;
 use App\Models\Branch;
 use App\Models\Classes;
 use App\Models\Streams;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StreamController extends Controller
 {
@@ -53,7 +55,8 @@ class StreamController extends Controller
         $pageData = [
             'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
-            'learners' => $stream->learners()->paginate(10) // Paginate learners with default of 10 per page
+            'learners' => $stream->learners()->paginate(10), // Paginate learners with default of 10 per page
+            'stream_id' => $stream_id
         ];
 
         return view('streams.learners', $pageData);
@@ -163,5 +166,12 @@ class StreamController extends Controller
         //
         $stream->delete();
         return redirect(route('streams.index'))->with('Success','Successfully deleted stream record');
+    }
+    //export stream learners
+
+    public function exportLearners($stream_id)
+    {
+        
+        return Excel::download(new StreamLearnersExport($stream_id), (new StreamLearnersExport($stream_id))->getFileName());
     }
 }

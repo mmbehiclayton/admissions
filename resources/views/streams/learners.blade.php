@@ -11,8 +11,12 @@
         <a href="{{ route('learners.create') }}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> 
             <i class="fas fa-user-edit"></i> Add Learner
         </a>
+        <a href="{{ route('streams.export.learners', $stream_id) }}" class="bg-green-500 text-white px-4 py-2 rounded text"> 
+            <i class="fas fa-file-excel"></i> Class List
+        </a>
     </div>
 </div>
+
 
 <div class="flex justify-between items-center mt-5 px-10">
     <form method="GET" action="{{ route('streams.learners', $stream->id) }}" class="flex items-center space-x-4">

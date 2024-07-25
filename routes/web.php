@@ -21,9 +21,8 @@ use App\Exports\AllLearnersExport;
 |
 */
 
-
-Route::get('learners/export/', function (){return Excel::download(new AllLearnersExport, 'learners.xlsx');
-})->name('learners.export');
+Route::get('/streams/{stream_id}/export-learners', [StreamController::class, 'exportLearners'])->name('streams.export.learners');
+Route::get('learners/export/', function (){return Excel::download(new AllLearnersExport, 'Nemis_List.xlsx');})->name('learners.export');
 Route::get('/learners/upload', [LearnersController::class, 'upload'])->name('learners.upload');
 Route::post('/learners/bulk-upload', [LearnersController::class, 'bulkUpload'])->name('learners.bulkUpload');
 Route::get('/classes/active', [ClassesController::class, 'activeClasses'])->name('classes.active');

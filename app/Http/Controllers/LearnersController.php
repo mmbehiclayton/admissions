@@ -6,6 +6,7 @@ use App\Models\Classes;
 use App\Models\Learners;
 use App\Models\Streams;
 use App\Imports\LearnersImport;
+use App\Exports\AllLearnersExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,7 +20,7 @@ class LearnersController extends Controller
         //
         $learners = Learners::with(['streams.classes'])->paginate(10);
         $pageData = [
-            'title' => 'LEARNERS LISTING ',
+            'title' => 'Al-Ameen Nemis List ',
             'learners' => $learners,
         ];
 
@@ -188,10 +189,7 @@ class LearnersController extends Controller
         return Excel::download(new AllLearnersExport, 'alllearners.xlsx');
     }
 
-    /**
-     * Display statistics of learners.
-     */
-    // app/Http/Controllers/LearnersController.php
+
 
     
 
