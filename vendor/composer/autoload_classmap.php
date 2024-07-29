@@ -56,6 +56,7 @@ return array(
     'App\\DataTables\\UserDataTable' => $baseDir . '/app/DataTables/UserDataTable.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Exports\\AllLearnersExport' => $baseDir . '/app/Exports/AllLearnersExport.php',
+    'App\\Exports\\StreamLearnersExport' => $baseDir . '/app/Exports/StreamLearnersExport.php',
     'App\\Http\\Controllers\\Admin\\HomeController' => $baseDir . '/app/Http/Controllers/Admin/HomeController.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
