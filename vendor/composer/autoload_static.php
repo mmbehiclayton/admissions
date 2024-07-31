@@ -669,6 +669,7 @@ class ComposerStaticInit8b9fb51de1ec722a455e324c6ca2e92d
         'App\\DataTables\\UserDataTable' => __DIR__ . '/../..' . '/app/DataTables/UserDataTable.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\AllLearnersExport' => __DIR__ . '/../..' . '/app/Exports/AllLearnersExport.php',
+        'App\\Exports\\StreamLearnersExport' => __DIR__ . '/../..' . '/app/Exports/StreamLearnersExport.php',
         'App\\Http\\Controllers\\Admin\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HomeController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
