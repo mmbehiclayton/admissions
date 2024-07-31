@@ -4,6 +4,7 @@
 
 <div class="flex justify-between items-center mr-5 mt-5">
     <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
+     <h2>Branch: {{ $branch->name }}</h2>
 </div>
 <section class="px-4">
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"></h4>

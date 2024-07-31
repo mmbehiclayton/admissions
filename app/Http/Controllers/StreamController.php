@@ -32,37 +32,55 @@ class StreamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function showAllStreams()
+    public function showAllStreams($branch_id)
     {
-        // Retrieve all streams
-        $streams = Streams::with('classes')->get();
+        // Retrieve the branch with its classes and streams
+        $branch = Branch::with(['classes.streams'])->findOrFail($branch_id);
 
-        // Pass data to the view
+        // Collect all streams from the classes of the branch
+        $streams = $branch->classes->flatMap(function ($class) {
+            return $class->streams;
+        });
+
+        // Prepare data for the view
         $pageData = [
-            'title' => 'All Streams',
-            'streams' => $streams
+            'title' => 'All Streams for ' . $branch->name,
+            'streams' => $streams,
+            'branch' => $branch
         ];
 
         return view('streams.all', $pageData);
     }
 
+
     public function showLearners($stream_id)
     {
-        // Retrieve the stream with active learners
+        // Retrieve the stream with learners
         $stream = Streams::with(['learners' => function ($query) {
             $query->where('status', 'active');
         }])->findOrFail($stream_id);
+
+        // Retrieve counts for different categories of learners
+        $totalActiveLearners = $stream->learners()->where('status', 'active')->count();
+        $totalInactiveLearners = $stream->learners()->where('status', 'inactive')->count();
+        $totalMaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'male')->count();
+        $totalFemaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'female')->count();
 
         // Prepare data for the view
         $pageData = [
             'title' => 'Learners/ ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
             'learners' => $stream->learners()->where('status', 'active')->paginate(50), // Paginate active learners with default of 50 per page
+            'totalActiveLearners' => $totalActiveLearners,
+            'totalInactiveLearners' => $totalInactiveLearners,
+            'totalMaleLearners' => $totalMaleLearners,
+            'totalFemaleLearners' => $totalFemaleLearners,
             'stream_id' => $stream_id
         ];
 
         return view('streams.learners', $pageData);
     }
+
 
         
     // pagination
