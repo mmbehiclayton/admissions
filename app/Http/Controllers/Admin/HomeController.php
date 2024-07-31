@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        $totalLearners = Learners::count();
+        $totalLearners = Learners::where('status', 'active')->count();
         $learnersWithoutNemisCode = Learners::where('nemis_code', 'None')
         ->orWhereNull('nemis_code')
         ->count();
