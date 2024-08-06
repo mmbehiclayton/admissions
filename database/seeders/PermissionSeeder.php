@@ -19,6 +19,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit roles']);
         Permission::create(['name' => 'delete roles']);
 
+        // users
+        Permission::create(['name' => 'view users']);
+        Permission::create(['name' => 'create users']);
+        Permission::create(['name' => 'edit users']);
+        Permission::create(['name' => 'delete users']);
+
         // Branch permissions
         Permission::create(['name' => 'view branches']);
         Permission::create(['name' => 'create branches']);
@@ -28,7 +34,7 @@ class PermissionSeeder extends Seeder
         // Class Permissions
         Permission::create(['name' => 'view classes']);
         Permission::create(['name' => 'create classes']);
-        Permission::create(['name' => 'edit classes']);
+        Permission::create(['name' => 'edit classes']); 
         Permission::create(['name' => 'delete classes']); 
 
         // Stream Permissions

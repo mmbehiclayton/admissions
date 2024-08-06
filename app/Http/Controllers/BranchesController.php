@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
 
@@ -32,6 +33,11 @@ class BranchesController extends Controller
     public function create()
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('create branches')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        } 
+
         $pageData = [
             'title' => 'BRANCH CREATE PAGE',
         ];
@@ -46,6 +52,10 @@ class BranchesController extends Controller
     public function store(Request $request)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('create branches')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }
         $request->validate([
             'name' => 'required'
         ]);
@@ -72,6 +82,10 @@ class BranchesController extends Controller
     public function edit(string $id)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('edit branches')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }
         $branch = Branch::find($id);
         $pageData = [
             'title' => 'BRANCH EDIT PAGE',
@@ -88,7 +102,11 @@ class BranchesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('edit branches')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }
+
         $request->validate([
             'name' => 'required'
         ]);
@@ -107,6 +125,11 @@ class BranchesController extends Controller
     public function destroy(Branch $branch)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('delete branches')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }
+
         $branch->delete();
         
         return redirect(route('branches.index'))->with('success', 'Deletion successfull ');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Classes;
 use App\Models\Streams;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -16,6 +17,8 @@ class ClassesController extends Controller
     public function index()
     {
         //
+       
+
         $classes = Classes::with(['branches','streams'])->paginate(20);
 
         $pageData = [
@@ -34,6 +37,11 @@ class ClassesController extends Controller
     public function create()
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('create classes')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }
+
         $branches = Branch::all();
         $pageData = [
             'title' => 'CLASS LISTING',
@@ -48,6 +56,11 @@ class ClassesController extends Controller
     public function store(Request $request, Classes $class)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('create classes')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        } 
+
         $request->validate([
             'name' => 'required',
         ]);
@@ -73,6 +86,10 @@ class ClassesController extends Controller
     public function edit(string $id)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('edit classes')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        } 
 
         $class = Classes::find($id);
 
@@ -92,7 +109,11 @@ class ClassesController extends Controller
     public function update(Request $request, Classes $class)
     {
         //
-       
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('create classes')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
+
         $request->validate([
             'name' => 'required',
             'stream_id' => 'required',
@@ -111,6 +132,12 @@ class ClassesController extends Controller
     public function destroy(Classes $class)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        
+        if (!$auth_user->can('delete classes')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        } 
+
         $class->delete();
         return redirect(route('classes.index'))->with('success', 'succesfully deleted class data');
     }

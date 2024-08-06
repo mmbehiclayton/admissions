@@ -6,6 +6,7 @@ use App\Exports\StreamLearnersExport;
 use App\Models\Branch;
 use App\Models\Classes;
 use App\Models\Streams;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
 use Maatwebsite\Excel\Facades\Excel;
@@ -46,21 +47,42 @@ class StreamController extends Controller
         return view('streams.all', $pageData);
     }
 
-    public function showLearners($stream_id)
+    public function showLearners(Request $request, $stream_id)
     {
-        // Retrieve the stream with learners
-        $stream = Streams::with('learners')->findOrFail($stream_id);
-
+        $status = $request->input('status', '');
+        $perPage = $request->input('per_page', 10); // Default to 10 if not specified
+        $search = $request->input('search', ''); // Search term
+    
+        // Fetch the stream
+        $stream = Streams::findOrFail($stream_id);
+    
+        // Filter learners based on status and search term, then paginate
+        $learnersQuery = $stream->learners()->newQuery();
+    
+        if (!empty($status)) {
+            $learnersQuery->where('status', 'like', "%$status%");
+        }
+    
+        if (!empty($search)) {
+            $learnersQuery->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('other_field', 'like', "%$search%"); // Adjust this to include other searchable fields
+            });
+        }
+    
+        $learners = $learnersQuery->paginate($perPage);
+    
         // Prepare data for the view
         $pageData = [
             'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
-            'learners' => $stream->learners()->paginate(10), // Paginate learners with default of 10 per page
+            'learners' => $learners,
             'stream_id' => $stream_id
         ];
-
+    
         return view('streams.learners', $pageData);
     }
+
         
     // pagination
     public function showStreamLearners(Request $request, $streamId)
@@ -127,6 +149,12 @@ class StreamController extends Controller
     public function edit(Streams $stream)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+
+        if (!$auth_user->can('edit streams')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
+
         $classes = Classes::all();
         $pageData = [
             'title' => 'STREAM EDIT PAGE',
@@ -145,6 +173,10 @@ class StreamController extends Controller
     public function update(Request $request, Streams $stream)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('edit streams')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
         $request->validate([
             'name' => 'required',
             'classes_id' => 'required',
@@ -164,6 +196,11 @@ class StreamController extends Controller
     public function destroy(Streams $stream)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('delete streams')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
+
         $stream->delete();
         return redirect(route('streams.index'))->with('Success','Successfully deleted stream record');
     }
@@ -171,7 +208,6 @@ class StreamController extends Controller
 
     public function exportLearners($stream_id)
     {
-        
         return Excel::download(new StreamLearnersExport($stream_id), (new StreamLearnersExport($stream_id))->getFileName());
     }
 }

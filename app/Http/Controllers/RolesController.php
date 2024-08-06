@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\RolesDataTable;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -52,6 +53,11 @@ class RolesController extends Controller
     public function show(string $id)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('show roles')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
+
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
         $rolePermissions = $role->permissions->pluck('id')->toArray();
@@ -72,7 +78,11 @@ class RolesController extends Controller
     public function edit(string $id)
     {
         //
-        $role = Role::findOrFail($id);
+        // $auth_user = User::find(auth()->user()->id);
+        // if (!$auth_user->can('edit roles')) {
+        //     return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        // }  
+        $role = Role::findOrFail($id); 
         $permissions = Permission::all();
         $rolePermissions = $role->permissions->pluck('id')->toArray();
 
@@ -90,6 +100,13 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('edit roles')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        } 
+        
+        
         $role = Role::findOrFail($id);
 
         // Validate the incoming request
@@ -114,6 +131,11 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         //
+        $auth_user = User::find(auth()->user()->id);
+        if (!$auth_user->can('delete roles')) {
+            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        }  
+
         $role->delete();
         Toastr()->success('Successs', 'Deletion successfull ');
         return redirect(route('roles.index'));

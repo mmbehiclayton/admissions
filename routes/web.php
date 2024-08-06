@@ -9,6 +9,8 @@ use App\Http\Controllers\StreamController;
 use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
 use App\Exports\AllLearnersExport;
+use App\Http\Controllers\UserController;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,7 @@ Route::resource('branches', BranchesController::class)->middleware('auth');
 Route::resource('classes', ClassesController::class)->middleware('auth');
 Route::resource('learners', LearnersController::class)->middleware('auth');
 Route::resource('streams', StreamController::class)->middleware('auth');
+Route::resource('users', UserController::class)->middleware('auth');
 
 
 //dashboard routes
