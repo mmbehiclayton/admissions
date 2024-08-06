@@ -47,12 +47,33 @@ class StreamController extends Controller
         return view('streams.all', $pageData);
     }
 
-    public function showLearners($stream_id)
+    public function showLearners($stream_id, Request $request)
 {
-    // Retrieve the stream with learners
-    $stream = Streams::with(['learners' => function ($query) {
-        $query->where('status', 'active');
-    }])->findOrFail($stream_id);
+
+    
+    $status = $request->input('status', '');
+    $perPage = $request->input('per_page', 10); // Default to 10 if not specified
+    $search = $request->input('search', ''); // Search term
+
+    // Fetch the stream
+    $stream = Streams::findOrFail($stream_id);
+
+    // Filter learners based on status and search term, then paginate
+    $learnersQuery = $stream->learners()->newQuery();
+
+    if (!empty($status)) {
+        $learnersQuery->where('status', 'like', "%$status%");
+    }
+
+    if (!empty($search)) {
+        $learnersQuery->where(function($q) use ($search) {
+            $q->where('name', 'like', "%$search%")
+              ->orWhere('other_field', 'like', "%$search%"); // Adjust this to include other searchable fields
+        });
+    }
+
+    $learners = $learnersQuery->paginate($perPage);
+
 
     // Retrieve counts for different categories of learners
     $totalActiveLearners = $stream->learners()->where('status', 'active')->count();
@@ -62,9 +83,9 @@ class StreamController extends Controller
 
     // Prepare data for the view
     $pageData = [
-        'title' => 'Learners/ ' . $stream->classes->name . ' ' . $stream->name,
+        'title' => 'Learners ' . $stream->classes->name . ' ' . $stream->name,
         'stream' => $stream,
-        'learners' => $stream->learners()->where('status', 'active')->paginate(50), // Paginate active learners with default of 50 per page
+        'learners' => $learners, // Paginate active learners with default of 50 per page
         'totalActiveLearners' => $totalActiveLearners,
         'totalInactiveLearners' => $totalInactiveLearners,
         'totalMaleLearners' => $totalMaleLearners,

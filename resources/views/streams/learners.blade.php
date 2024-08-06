@@ -1,46 +1,26 @@
 @extends('layouts.admin')
 
 @section('content')
-<<<<<<< HEAD
 <div class="container grid px-6 mx-auto">
-<div class="flex items-center justify-between mt-5 mr-5">
-    <h2 class="ml-5 text-2xl font-semibold dark:text-white">{{ $title }}</h2>
-    <div class="flex space-x-4">
-        <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text"> 
-            <i class="fas fa-download"></i> Import
-        </a>
-        <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-purple-500 rounded text"> 
-            <i class="fas fa-user-edit"></i> Add Learner
-        </a>
-        <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text"> 
-            <i class="fas fa-file-excel"></i> Class List
-        </a>
-    </div>
-</div>
-
-
-<div class="flex items-center justify-between px-10 mt-5">
-=======
-<div class="container px-6 mx-auto grid">
-        <div class="flex justify-between items-center mr-5 mt-5">
-        <div class="flex items-center ml-5 mb-4">
+        <div class="flex items-center justify-between mt-5 mr-5">
+        <div class="flex items-center mb-4 ml-5">
             <a href="{{ route('streams.all') }}" class="flex items-center text-blue-500 hover:text-blue-700">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a1 1 0 01-.707-.293l-7-7a1 1 0 010-1.414l7-7a1 1 0 011.414 1.414L4.414 10l6.293 6.293a1 1 0 01-1.414 1.414z" clip-rule="evenodd"></path>
                 </svg>
                 <span>Back to All Streams</span>
             </a>
-            <h2 class="dark:text-white font-semibold text-2xl ml-4">{{ $title }}</h2>
+            <h2 class="ml-4 text-2xl font-semibold dark:text-white">{{ $title }}</h2>
         </div>
         
         <div class="flex space-x-4">
-            <a href="{{ route('learners.upload') }}" class="bg-blue-500 text-white px-4 py-2 rounded text"> 
+            <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text"> 
                 <i class="fas fa-download"></i> Import
             </a>
-            <a href="{{ route('learners.create') }}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4"> 
+            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-purple-500 rounded text"> 
                 <i class="fas fa-user-edit"></i> Add Learner
             </a>
-            <a href="{{ route('streams.export.learners', $stream_id) }}" class="bg-green-500 text-white px-4 py-2 rounded text"> 
+            <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text"> 
                 <i class="fas fa-file-excel"></i> Class List
             </a>
         </div>
@@ -154,8 +134,7 @@
     <!--End of stats section using cards-->
 
 
-    <div class="flex justify-between items-center mt-5 px-10">
->>>>>>> d0a5f1af59ffdd4770c26f955052672a21bd8f3c
+    <div class="flex items-center justify-between px-10 mt-5">
     <form method="GET" action="{{ route('streams.learners', $stream->id) }}" class="flex items-center space-x-4">
         <div class="flex items-center">
             <label for="per_page" class="mr-2 text-gray-700 dark:text-gray-300">Show</label>
@@ -180,7 +159,6 @@
         </div>
     </form>
     </div>
-
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
