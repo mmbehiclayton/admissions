@@ -47,47 +47,40 @@ class StreamController extends Controller
         return view('streams.all', $pageData);
     }
 
-    public function showLearners(Request $request, $stream_id)
-    {
-        $status = $request->input('status', '');
-        $perPage = $request->input('per_page', 10); // Default to 10 if not specified
-        $search = $request->input('search', ''); // Search term
-    
-        // Fetch the stream
-        $stream = Streams::findOrFail($stream_id);
-    
-        // Filter learners based on status and search term, then paginate
-        $learnersQuery = $stream->learners()->newQuery();
-    
-        if (!empty($status)) {
-            $learnersQuery->where('status', 'like', "%$status%");
-        }
-    
-        if (!empty($search)) {
-            $learnersQuery->where(function($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhere('other_field', 'like', "%$search%"); // Adjust this to include other searchable fields
-            });
-        }
-    
-        $learners = $learnersQuery->paginate($perPage);
-    
-        // Prepare data for the view
-        $pageData = [
-            'title' => 'Learners in ' . $stream->classes->name . ' ' . $stream->name,
-            'stream' => $stream,
-            'learners' => $learners,
-            'stream_id' => $stream_id
-        ];
-    
-        return view('streams.learners', $pageData);
-    }
+    public function showLearners($stream_id)
+{
+    // Retrieve the stream with learners
+    $stream = Streams::with(['learners' => function ($query) {
+        $query->where('status', 'active');
+    }])->findOrFail($stream_id);
+
+    // Retrieve counts for different categories of learners
+    $totalActiveLearners = $stream->learners()->where('status', 'active')->count();
+    $totalInactiveLearners = $stream->learners()->where('status', 'inactive')->count();
+    $totalMaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'male')->count();
+    $totalFemaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'female')->count();
+
+    // Prepare data for the view
+    $pageData = [
+        'title' => 'Learners/ ' . $stream->classes->name . ' ' . $stream->name,
+        'stream' => $stream,
+        'learners' => $stream->learners()->where('status', 'active')->paginate(50), // Paginate active learners with default of 50 per page
+        'totalActiveLearners' => $totalActiveLearners,
+        'totalInactiveLearners' => $totalInactiveLearners,
+        'totalMaleLearners' => $totalMaleLearners,
+        'totalFemaleLearners' => $totalFemaleLearners,
+        'stream_id' => $stream_id
+    ];
+
+    return view('streams.learners', $pageData);
+}
+
 
         
     // pagination
     public function showStreamLearners(Request $request, $streamId)
     {
-        $perPage = $request->input('per_page', 10); // Default to 10 records per page, can be adjusted via query param
+        $perPage = $request->input('per_page', 50); // Default to 50 records per page, can be adjusted via query param
         $stream = Streams::with('learners')->findOrFail($streamId);
         $learners = $stream->learners()->paginate($perPage);
 

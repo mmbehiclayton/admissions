@@ -18,7 +18,7 @@ class LearnersController extends Controller
     public function index()
     {
         //
-        $learners = Learners::with(['streams.classes'])->paginate(10);
+        $learners = Learners::with(['streams.classes'])->paginate(50);
         $pageData = [
             'title' => 'Al-Ameen Nemis List ',
             'learners' => $learners,
