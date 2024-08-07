@@ -38,11 +38,22 @@ class StreamController extends Controller
         // Retrieve all streams of a specific branch
         $user = auth()->user();
 
+        if($user->hasRole('admin')){
+            $streams = Streams::with('classes')->get();
+            
+        }
+        else{
+     
         $streams = Streams::with('classes')
         ->whereHas('classes', function ($query) use ($user) {
             $query->where('branch_id', $user->branch_id);
         })
+       
         ->get();
+        }
+
+
+
 
         // Pass data to the view
         $pageData = [

@@ -7,7 +7,7 @@ use App\Models\Classes;
 use App\Models\Streams;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class ClassesController extends Controller
 {
@@ -17,9 +17,16 @@ class ClassesController extends Controller
     public function index()
     {
         //
-       
 
-        $classes = Classes::with(['branches','streams'])->paginate(20);
+        $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            $classes = Classes::with(['branches', 'streams'])->paginate(20);
+        } else {
+            $classes = Classes::where('branch_id', $user->branch_id)->with(['branches', 'streams'])
+                ->paginate(20);
+        }
+
 
         $pageData = [
             'title' => 'CLASS LISTINGS ',
@@ -27,7 +34,7 @@ class ClassesController extends Controller
         ];
 
         // dd($classes);
-       
+
         return  view('classes.index', $pageData);
     }
 
@@ -59,7 +66,7 @@ class ClassesController extends Controller
         $auth_user = User::find(auth()->user()->id);
         if (!$auth_user->can('create classes')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        } 
+        }
 
         $request->validate([
             'name' => 'required',
@@ -89,7 +96,7 @@ class ClassesController extends Controller
         $auth_user = User::find(auth()->user()->id);
         if (!$auth_user->can('edit classes')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        } 
+        }
 
         $class = Classes::find($id);
 
@@ -112,7 +119,7 @@ class ClassesController extends Controller
         $auth_user = User::find(auth()->user()->id);
         if (!$auth_user->can('create classes')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        }  
+        }
 
         $request->validate([
             'name' => 'required',
@@ -133,13 +140,12 @@ class ClassesController extends Controller
     {
         //
         $auth_user = User::find(auth()->user()->id);
-        
+
         if (!$auth_user->can('delete classes')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        } 
+        }
 
         $class->delete();
         return redirect(route('classes.index'))->with('success', 'succesfully deleted class data');
     }
-
 }

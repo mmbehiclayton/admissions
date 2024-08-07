@@ -109,9 +109,10 @@ class UserController extends Controller
     {
        
         $user = User::find(auth()->user()->id);
-        if (!$user->can('edit users')) {
-            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        } 
+        
+        // if (!$user->can('edit users')) {
+        //     return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        // } 
         $user = User::find($id);
 
         $roles = Role::all();
@@ -124,7 +125,7 @@ class UserController extends Controller
 
         
 
-        $userBranch = Branch::find($user->branch_id)->name;
+        $userBranch = Branch::find(isset($user->branch_id));
       
         
         $pageData = [
@@ -132,7 +133,7 @@ class UserController extends Controller
             'user' => $user,
             'roles' => $roles,
             'userRole' =>$userRole,
-            'userBranch' => $userBranch,
+            'userBranch' => isset($userBranch) ? $userBranch->name : 'No Branch',
             'branches' => $branches,
             'permissions' => $permissions,
             'userPermissions' => $userPermissions,
@@ -150,13 +151,16 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find(auth()->user()->id);
-        if (!$user->can('edit users')) {
-            return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        } 
+        // if (!$user->can('edit users')) {
+        //     return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
+        // } 
+
+        // dd($request->all());
     
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
+        
         ]);
     
         $user = User::findOrFail($id);
@@ -176,14 +180,13 @@ class UserController extends Controller
     
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->branch_id = $request->branch_id;
         
-        $user->save();
+        $user->update();
 
-        return back()->with('success', 'User detail updated successfully !');
+        return redirect(route('users.index'))->with('success', 'User detail updated successfully !');
     }
     
-
-
     /**
      * Remove the specified resource from storage.
      */
