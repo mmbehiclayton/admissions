@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -116,8 +117,14 @@ class UserController extends Controller
         $roles = Role::all();
         $permissions = Permission::all();
 
+        $branches = Branch::all();
+
         $userRole = $user->getRoleNames();
         $userPermissions = $user->getDirectPermissions()->pluck('name')->toArray();
+
+        
+
+        $userBranch = Branch::find($user->branch_id)->name;
       
         
         $pageData = [
@@ -125,6 +132,8 @@ class UserController extends Controller
             'user' => $user,
             'roles' => $roles,
             'userRole' =>$userRole,
+            'userBranch' => $userBranch,
+            'branches' => $branches,
             'permissions' => $permissions,
             'userPermissions' => $userPermissions,
         ];

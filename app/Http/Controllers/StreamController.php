@@ -35,8 +35,14 @@ class StreamController extends Controller
      */
     public function showAllStreams()
     {
-        // Retrieve all streams
-        $streams = Streams::with('classes')->get();
+        // Retrieve all streams of a specific branch
+        $user = auth()->user();
+
+        $streams = Streams::with('classes')
+        ->whereHas('classes', function ($query) use ($user) {
+            $query->where('branch_id', $user->branch_id);
+        })
+        ->get();
 
         // Pass data to the view
         $pageData = [
