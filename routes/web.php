@@ -31,6 +31,8 @@ Route::get('/classes/active', [ClassesController::class, 'activeClasses'])->name
 Route::get('/streams/all', [StreamController::class, 'showAllStreams'])->name('streams.all');
 Route::get('/streams/{stream_id}/learners', [StreamController::class, 'showLearners'])->name('streams.learners');
 
+
+
 Route::get('/', HomeController::class)->name('home')->middleware('auth');
 Route::resource('roles', RolesController::class)->middleware('auth');
 Route::resource('branches', BranchesController::class)->middleware('auth');
