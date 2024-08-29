@@ -107,12 +107,8 @@
                 </div>
               </div>
               <!-- Card -->
-              <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-              >
-                <div
-                  class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
-                >
+              <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C8.134 0 5 3.134 5 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 12C9.239 12 7 9.761 7 7s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5zm1 3h-2v2h2v-2zm0 3h-2v2h2v-2z"/>
                 </svg>
@@ -177,6 +173,8 @@
                         <th class="px-4 py-3">Nemis</th>
                         <th class="px-4 py-3">DOA</th>
                         <th class="px-4 py-3">Contact</th>
+                        <th class="px-4 py-3">Transport Route</th>
+                        <th class="px-4 py-3">Co-Curricular Activity</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Actions</th>
                     </tr>
@@ -196,6 +194,8 @@
                         <td class="px-4 py-3 text-sm">{{ $learner->nemis_code }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->date_of_addmission }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->contact }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->transport_route }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->co_curricular_activity }}</td>
                         <td class="px-4 py-3 text-xs">
                             @if ($learner->status == 'active')
                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">

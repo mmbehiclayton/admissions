@@ -24,6 +24,8 @@ class Learners extends Model
         'nemis_code',
         'date_of_addmission',
         'contact',
+        'transport_route',
+        'co_curricular_activity',
 
     ];
 

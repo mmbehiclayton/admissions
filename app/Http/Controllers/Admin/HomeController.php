@@ -16,18 +16,49 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        $totalLearners = Learners::where('status', 'active')->count();
-        $learnersWithoutNemisCode = Learners::where('nemis_code', 'None')
-        ->orWhereNull('nemis_code')
-        ->count();
-        $learnersInactive = Learners::where('status', 'inactive')->count();
-        $learnersTransferred = Learners::where('status', 'Transferred')->count();
+        // Retrieve the authenticated user
+        $user = auth()->user();
 
-        // Get the most recently added or updated learners, limited to 10
+        // Get the total number of active learners for the user's branch
+        $totalLearners = Learners::where('status', 'active')
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
+            ->count();
+
+        // Get the number of learners without a NEMIS code for the user's branch
+        $learnersWithoutNemisCode = Learners::where(function ($query) {
+                $query->where('nemis_code', 'None')
+                    ->orWhereNull('nemis_code');
+            })
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
+            ->count();
+
+        // Get the number of inactive learners for the user's branch
+        $learnersInactive = Learners::where('status', 'inactive')
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
+            ->count();
+
+        // Get the number of transferred learners for the user's branch
+        $learnersTransferred = Learners::where('status', 'Transferred')
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
+            ->count();
+
+        // Get the most recently added or updated learners for the user's branch, limited to 10
         $recentLearners = Learners::latest('updated_at')
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
             ->take(10)
             ->get();
 
+        // Prepare the data for the view
         $pageData = [
             'totalLearners' => $totalLearners,
             'learnersWithoutNemisCode' => $learnersWithoutNemisCode,
@@ -36,8 +67,8 @@ class HomeController extends Controller
             'recentLearners' => $recentLearners, 
         ];
 
-       
-
+        // Return the view with the prepared data
         return view('admin.index', $pageData);
     }
+
 }
