@@ -3,7 +3,7 @@
 
 <div class="flex justify-between items-center mr-5 mt-5">
     <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
-    <a href="{{route('streams.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text"> <i class="fas fa-user-edit"></i> Add Stream</a>
+    <a href="{{route('streams.create')}}" class="bg-green-500 text-white px-4 py-2 rounded text"> <i class="fas fa-user-edit"></i> Add Stream</a>
 </div>
 <section class="px-4">
     <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"></h4>
@@ -25,7 +25,7 @@
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 <div class="col-sm">
-                                    <a href="{{ route('streams.edit', $stream->id) }}" class=" p-2 pr-3 bg-transparent hover:bg-purple-600 hover:text-white cursor-pointer dark:bg-gray-700 dark:hover:bg-purple-600 dark:text-gray-300 dark:hover:text-white"> 
+                                    <a href="{{ route('streams.edit', $stream->id) }}" class=" p-2 pr-3 bg-transparent hover:bg-green-600 hover:text-white cursor-pointer dark:bg-gray-700 dark:hover:bg-green-600 dark:text-gray-300 dark:hover:text-white"> 
                                         <i class="fa fa-edit mx-1"></i>Edit
                                     </a>
                                 </div>
