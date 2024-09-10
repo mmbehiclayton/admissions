@@ -97,12 +97,20 @@
                 @enderror
             </div>
 
-            <div class="my-4">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Nationality</span>
-                    <input name="nationality" placeholder="Enter Nationality " value="{{$learner->nationality}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
+            
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Nationality
+                    </span>
+                    <select name="nationality" id="select" value="{{$learner->nationality}}" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+
+                        <option value="Citizen">Citizen</option>
+                        <option value="Non Citizen">Non Citizen</option>
+
+                    </select>
                 </label>
-                @error('nationality')
+                @error('gender')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
@@ -135,6 +143,92 @@
                     <input name="contact" placeholder="Enter Contact Person No" value="{{$learner->contact}}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
                 </label>
                 @error('contact')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Co-Curricular Activity
+                    </span>
+                    <select name="co_curricular_activity" id="select" value="{{$learner->co_curricular_activity}}" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+
+                        <option>- Select Co-Curricular Activity - </option>
+                        <option value="Taekwondo">Taekwondo</option>
+                        <option value="Soccer">Soccer</option>
+
+                    </select>
+                </label>
+                @error('co_curricular_activity')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Transport Route
+                    </span>
+                    <select name="transport_route" id="select" value="{{$learner->transport_route}}" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                        <option>- Select Transport Route - </option>
+                        <option value="BATU BATU">BATU BATU</option>
+                        <option value="3RD AVENUE">3RD AVENUE</option>
+                        <option value="MARINE HEIGHTS">MARINE HEIGHTS</option>
+                        <option value="MIAMI ROAD">MIAMI ROAD</option>
+                        <option value="PARK VILLA">PARK VILLA</option>
+                        <option value="AURA">AURA</option>
+                        <option value="SUSWA">SUSWA</option>
+                        <option value="AGA KHAN">AGA KHAN</option>
+                        <option value="PARKLANDS">PARKLANDS</option>
+                        <option value="NAJHA PARK">NAJHA PARK</option>
+                        <option value="CHINGA DAM">CHINGA DAM</option>
+                        <option value="RAHAL TOWERS">RAHAL TOWERS</option>
+                        <option value="DON BOSCO">DON BOSCO</option>
+                        <option value="JUJA CORNER">JUJA CORNER</option>
+                        <option value="FOREST ROAD">FOREST ROAD</option>
+                        <option value="FOURTH STREET">FOURTH STREET</option>
+                        <option value="MARIE STOP">MARIE STOP</option>
+                        <option value="JAM STREET">JAM STREET</option>
+                        <option value="USHIRIKA">USHIRIKA</option>
+                        <option value="JUJA B">JUJA B</option>
+                        <option value="MURATINA ROAD">MURATINA ROAD</option>
+                        <option value="KARIOKOR">KARIOKOR</option>
+                        <option value="MEMON">MEMON</option>
+                        <option value="KWA KUNI">KWA KUNI</option>
+                        <option value="CROSS ROAD">CROSS ROAD</option>
+                        <option value="MABRUK 2">MABRUK 2</option>
+                        <option value="CALIFORNIA">CALIFORNIA</option>
+                        <option value="Pumwani">Pumwani</option>
+                        <option value="KHADIJA PLAZA">KHADIJA PLAZA</option>
+                        <option value="HIGH RISE">HIGH RISE</option>
+                        <option value="SAFARICOM">SAFARICOM</option>
+                        <option value="BBS MALL">BBS MALL</option>
+                        <option value="BURHAN">BURHAN</option>
+                        <option value="CHAI ROAD HEIGHTS">CHAI ROAD HEIGHTS</option>
+                        <option value="CITY PARK">CITY PARK</option>
+                        <option value="CITY PARK DRIVE">CITY PARK DRIVE</option>
+                        <option value="BATU BATU GARDENS">BATU BATU GARDENS</option>
+                        <option value="1ST AVENUE PARKLAND">1ST AVENUE PARKLAND</option>
+                        <option value="PANGANI">PANGANI</option>
+                        <option value="JUJA A">JUJA A</option>
+                        <option value="AL-AMEEN">AL-AMEEN</option>
+                        <option value="UNITED TOWER">UNITED TOWER</option>
+                        <option value="PARK ROAD">PARK ROAD</option>
+                        <option value="DARUSUNNAH">DARUSUNNAH</option>
+                        <option value="CHICKEN POP">CHICKEN POP</option>
+                        <option value="CHAI ROAD">CHAI ROAD</option>
+                        <option value="JUJA B ESTATE">JUJA B ESTATE</option>
+                        <option value="AL-AMEEN SCHOOL.">AL-AMEEN SCHOOL.</option>
+                        <option value="PARKROAD">PARKROAD</option>
+                        <option value="PARKROAD 1 WAY">PARKROAD 1 WAY</option>
+                        <option value="PANGANI">PANGANI</option>
+                        <option value="PANGANI 1 WAY">PANGANI 1 WAY</option>
+                        <option value="CITY PARK">CITY PARK</option>
+                        <option value="CITY PARK 1 WAY">CITY PARK 1 WAY</option>
+                        <option value="PARKLANDS">PARKLANDS</option>
+                        <option value="PARKLANDS 1 WAY">PARKLANDS 1 WAY</option>
+                    </select>
+                </label>
+                @error('transport_route')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>

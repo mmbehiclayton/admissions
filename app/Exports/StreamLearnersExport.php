@@ -47,8 +47,10 @@ class StreamLearnersExport implements FromCollection, WithHeadings, WithMapping
             'Nemis Code',
             'Date of Admission',
             'Contact',
-            'Created At',
-            'Updated At',
+            'Transport Route',
+            'Co-Curricular Activity',
+            // 'Created At',
+            // 'Updated At',
             'Status',
             // Add other relevant headers based on your Learners model
         ];
@@ -62,7 +64,7 @@ class StreamLearnersExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $learner->id,
-            ($learner->streams->classes->name ?? 'N/A') . ' ' . ($learner->streams->name ?? 'N/A'), // Display class and stream name
+            ($learner->streams->classes->name ?? 'N/A') . ' ' . ($learner->streams->name ?? 'N/A'), 
             $learner->assessment_no,
             $learner->name,
             $learner->admission_no,
@@ -73,10 +75,12 @@ class StreamLearnersExport implements FromCollection, WithHeadings, WithMapping
             $learner->nemis_code,
             $learner->date_of_addmission,
             $learner->contact,
-            $learner->created_at,
-            $learner->updated_at,
+            $learner->transport_route,
+            $learner->co_curricular_activity,
+            // $learner->created_at,
+            // $learner->updated_at,
             $learner->status,
-            // Add other relevant fields based on your Learners model
+           
         ];
     }
 

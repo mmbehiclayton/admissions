@@ -17,16 +17,26 @@ class LearnersController extends Controller
      */
     public function index()
     {
-        //
-        $learners = Learners::with(['streams.classes'])->paginate(50);
+        // Retrieve the authenticated user
+        $user = auth()->user();
+
+        // Retrieve learners only for the user's branch
+        $learners = Learners::with(['streams.classes'])
+            ->whereHas('streams.classes', function ($query) use ($user) {
+                $query->where('branch_id', $user->branch_id);
+            })
+            ->paginate(50);
+
+        // Prepare data for the view
         $pageData = [
-            'title' => 'Al-Ameen Nemis List ',
+            'title' => 'Al-Ameen Nemis List',
             'learners' => $learners,
         ];
 
-        // dd($learners);
+        // Return the view with the learners data
         return view('learners.index', $pageData);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,7 +73,9 @@ class LearnersController extends Controller
             'nemis_code' => 'required|unique:students,nemis_code',
             'date_of_addmission' => 'required|date',
             'contact' => 'nullable',
-            'admission_no' => 'required|unique:students,admission_no'    
+            'admission_no' => 'required|unique:students,admission_no',
+            'co_curricular_activity' => 'nullable',
+            'transport_route' => 'nullable'    
         ]);
 
         $learner = new Learners();
@@ -78,6 +90,8 @@ class LearnersController extends Controller
         $learner->admission_no = $request->input('admission_no');
         $learner->date_of_addmission = $request->input('date_of_addmission');
         $learner->contact = $request->input('contact');
+        $learner->co_curricular_activity = $request->input('co_curricular_activity');
+        $learner->transport_route = $request->input('transport_route');
         $learner->status = 'active';
         $learner->save();
 
@@ -130,7 +144,9 @@ class LearnersController extends Controller
             'nemis_code' => 'required',
             'date_of_addmission' => 'required',
             'contact' => 'required',
-            'admission_no' => 'required'    
+            'admission_no' => 'required',
+            'co_curricular_activity' => 'required',
+            'transport_route' => 'required'        
         ]);
 
         $learner = Learners::find($id);
@@ -146,6 +162,8 @@ class LearnersController extends Controller
         $learner->date_of_addmission = $request->input('date_of_addmission');
         $learner->contact = $request->input('contact');
         $learner->status = $request->input('status');
+        $learner->co_curricular_activity = $request->input('co_curricular_activity');
+        $learner->transport_route = $request->input('transport_route');
         $learner->update();
 
         return redirect(route('streams.learners', $learner->stream_id))->with('success', 'Learner updated successfully !');

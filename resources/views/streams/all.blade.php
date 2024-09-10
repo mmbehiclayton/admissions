@@ -20,7 +20,7 @@
                     <tr class="text-gray-700 dark:text-gray-400">
                         <td class="px-4 py-3 text-sm">
                             <a href="{{ route('streams.learners', $stream->id) }}" class="text-blue-500 hover:underline">
-                                {{ $stream->classes->name }} {{ $stream->name }}
+                                {{ optional($stream->classes->branches)->name }} - {{ optional($stream->classes)->name }} {{ $stream->name }}
                             </a>
                         </td>
                     </tr>

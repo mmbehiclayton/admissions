@@ -4,13 +4,13 @@
     <div class="flex justify-between items-center mr-5 mt-5">
         <h2 class="dark:text-white ml-5 font-semibold text-2xl">{{$title}}</h2>
         <div class="flex space-x-4">
-            <a href="{{route('learners.upload')}}" class="bg-blue-500 text-white px-4 py-2 rounded text">Add Bulk Learners 
+            <a href="{{route('learners.upload')}}" class="bg-green-500 text-white px-4 py-2 rounded text">Add Bulk Learners 
                 <i class="fas fa-upload"></i>
             </a>
             <a href="{{ route('learners.export')}}" class="bg-green-500 text-white px-4 py-2 rounded text"> 
             <i class="fas fa-file-excel"></i> Nemis List
             </a>
-            <a href="{{route('learners.create')}}" class="bg-purple-500 text-white px-4 py-2 rounded text mr-4">Add Learner
+            <a href="{{route('learners.create')}}" class="bg-green-500 text-white px-4 py-2 rounded text mr-4">Add Learner
                 <i class="fas fa-user-edit"></i>
             </a>
         </div>
@@ -98,7 +98,7 @@
                         @endif
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
-                                <a href="{{ route('learners.edit', $learner->id) }}" class="p-2 pr-3 bg-transparent hover:bg-purple-600 hover:text-white cursor-pointer dark:bg-gray-700 dark:hover:bg-purple-600 dark:text-gray-300 dark:hover:text-white">
+                                <a href="{{ route('learners.edit', $learner->id) }}" class="p-2 pr-3 bg-transparent hover:bg-green-600 hover:text-white cursor-pointer dark:bg-gray-700 dark:hover:bg-green-600 dark:text-gray-300 dark:hover:text-white">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                     </svg>

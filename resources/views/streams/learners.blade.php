@@ -17,7 +17,7 @@
             <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text"> 
                 <i class="fas fa-download"></i> Import
             </a>
-            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-purple-500 rounded text"> 
+            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text"> 
                 <i class="fas fa-user-edit"></i> Add Learner
             </a>
             <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text"> 
@@ -107,12 +107,8 @@
                 </div>
               </div>
               <!-- Card -->
-              <div
-                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-              >
-                <div
-                  class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
-                >
+              <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0C8.134 0 5 3.134 5 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 12C9.239 12 7 9.761 7 7s2.239-5 5-5 5 2.239 5 5-2.239 5-5 5zm1 3h-2v2h2v-2zm0 3h-2v2h2v-2z"/>
                 </svg>
@@ -177,6 +173,8 @@
                         <th class="px-4 py-3">Nemis</th>
                         <th class="px-4 py-3">DOA</th>
                         <th class="px-4 py-3">Contact</th>
+                        <th class="px-4 py-3">Transport Route</th>
+                        <th class="px-4 py-3">Co-Curricular Activity</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Actions</th>
                     </tr>
@@ -196,6 +194,8 @@
                         <td class="px-4 py-3 text-sm">{{ $learner->nemis_code }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->date_of_addmission }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->contact }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->transport_route }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->co_curricular_activity }}</td>
                         <td class="px-4 py-3 text-xs">
                             @if ($learner->status == 'active')
                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
@@ -213,7 +213,7 @@
                         </td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
-                                <a href="{{ route('learners.edit', $learner->id) }}" class="p-2 pr-3 bg-transparent cursor-pointer hover:bg-purple-600 hover:text-white dark:bg-gray-700 dark:hover:bg-purple-600 dark:text-gray-300 dark:hover:text-white">
+                                <a href="{{ route('learners.edit', $learner->id) }}" class="p-2 pr-3 bg-transparent cursor-pointer hover:bg-green-600 hover:text-white dark:bg-gray-700 dark:hover:bg-green-600 dark:text-gray-300 dark:hover:text-white">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                     </svg>
