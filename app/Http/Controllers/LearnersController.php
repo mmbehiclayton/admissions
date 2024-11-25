@@ -51,7 +51,7 @@ class LearnersController extends Controller
             'streams' => $streams,
             'title' => 'LEARNERS CREATE PAGE'
         ];
-        
+
         return view('learners.create', $pageData);
     }
 
@@ -65,17 +65,17 @@ class LearnersController extends Controller
         $request->validate([
             'stream_id' => 'required',
             'name' => 'required',
-            'assessment_no' => 'required|unique:students,assessment_no',
+            'assessment_no' => 'unique:students,assessment_no',
             'gender' => 'required',
             'dob' => 'required|date',
-            'bc_pp_entry_no' => 'required|unique:students,bc_pp_entry_no', 
+            'bc_pp_entry_no' => 'unique:students,bc_pp_entry_no',
             'nationality' => 'required',
-            'nemis_code' => 'required|unique:students,nemis_code',
+            'nemis_code' => 'unique:students,nemis_code',
             'date_of_addmission' => 'required|date',
             'contact' => 'nullable',
             'admission_no' => 'required|unique:students,admission_no',
             'co_curricular_activity' => 'nullable',
-            'transport_route' => 'nullable'    
+            'transport_route' => 'nullable'
         ]);
 
         $learner = new Learners();
@@ -123,7 +123,7 @@ class LearnersController extends Controller
             'streams' => $streams,
             'learner' => $learner
         ];
-        
+
         return view('learners.edit', $pageData);
     }
 
@@ -146,7 +146,7 @@ class LearnersController extends Controller
             'contact' => 'required',
             'admission_no' => 'required',
             'co_curricular_activity' => 'required',
-            'transport_route' => 'required'        
+            'transport_route' => 'required'
         ]);
 
         $learner = Learners::find($id);
@@ -197,19 +197,19 @@ class LearnersController extends Controller
 
         Excel::import(new LearnersImport, $request->file('file'));
 
-        
+
         return redirect()->route('learners.index')->with('success', 'Learners uploaded successfully');
     }
 
     //export learners
-    public function export() 
+    public function export()
     {
         return Excel::download(new AllLearnersExport, 'alllearners.xlsx');
     }
 
 
 
-    
+
 
 
 }
