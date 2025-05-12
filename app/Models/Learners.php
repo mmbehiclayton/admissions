@@ -41,6 +41,11 @@ class Learners extends Model
         return $this->belongsTo(Branch::class);
     }
 
-   
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class);
+    }
+
+
 
 }

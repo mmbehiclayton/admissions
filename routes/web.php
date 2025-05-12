@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\BusController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\LearnersController;
 use App\Http\Controllers\RolesController;
@@ -31,6 +32,10 @@ Route::resource('classes', ClassesController::class)->middleware('auth');
 Route::resource('learners', LearnersController::class)->middleware('auth');
 Route::resource('streams', StreamController::class)->middleware('auth');
 Route::resource('users', UserController::class)->middleware('auth');
+Route::resource('buses', BusController::class)->middleware('auth');
+//route for bulk-delete
+Route::delete('/learners/bulk-delete', [LearnersController::class, 'bulkDelete'])->name('learners.bulkDelete');
+
 
 
 //dashboard routes

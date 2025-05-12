@@ -12,15 +12,15 @@
             </a>
             <h2 class="ml-4 text-2xl font-semibold dark:text-white">{{ $title }}</h2>
         </div>
-        
+
         <div class="flex space-x-4">
-            <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text"> 
+            <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text">
                 <i class="fas fa-download"></i> Import
             </a>
-            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text"> 
+            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text">
                 <i class="fas fa-user-edit"></i> Add Learner
             </a>
-            <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text"> 
+            <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text">
                 <i class="fas fa-file-excel"></i> Class List
             </a>
         </div>
@@ -97,7 +97,7 @@
                   <p
                     class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
                   >
-                    Male
+                    Boys
                   </p>
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
@@ -117,7 +117,7 @@
                   <p
                     class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
                   >
-                    Female
+                    Girls
                   </p>
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
@@ -143,17 +143,29 @@
             </select>
             <span class="ml-2 text-gray-700 dark:text-gray-300">records</span>
         </div>
+
         
-        <div class="flex items-center">
-            <label for="status" class="mr-2 text-gray-700 dark:text-gray-300">Status</label>
-            <select name="status" id="status" class="form-select" onchange="this.form.submit()">
-                <option value="">All</option>
-                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                <option value="transferred" {{ request('status') == 'transferred' ? 'selected' : '' }}>Transferred</option>
+    </form>
+
+    {{-- Add toggle button --}}
+    <form method="GET" action="{{ route('streams.learners', $stream_id) }}" class="flex flex-wrap items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+            <label for="status" class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by status:</label>
+            <select name="status" onchange="this.form.submit()" class="...">
+                <option value="active" {{ request('status', 'active') == 'active' ? 'selected' : '' }}>Active(default)</option>
                 <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>All</option>
             </select>
         </div>
+
+        <div class="flex items-center space-x-2">
+            <input type="text" name="search" placeholder="Search learners..." value="{{ request('search') }}" class="rounded border-gray-300 text-sm dark:bg-gray-800 dark:text-white">
+            <button type="submit" class="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600">
+                Search
+            </button>
+        </div>
     </form>
+
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -231,7 +243,8 @@
             </table>
         </div>
         <div class="p-2 mt-2">
-            {{ $learners->appends(['per_page' => request('per_page'), 'status' => request('status')])->links() }}
+            {{ $learners->appends(request()->query())->links() }}
+
         </div>
     </div>
 </div>

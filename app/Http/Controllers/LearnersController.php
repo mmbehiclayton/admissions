@@ -207,6 +207,16 @@ class LearnersController extends Controller
         return Excel::download(new AllLearnersExport, 'alllearners.xlsx');
     }
 
+    //bulk delete Learners
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('selected_ids', []);
+        Learners::whereIn('id', $ids)->delete();
+
+        return redirect()->route('learners.index')->with('success', 'Selected learners deleted successfully.');
+    }
+
+
 
 
 

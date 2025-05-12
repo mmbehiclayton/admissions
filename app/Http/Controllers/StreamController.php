@@ -19,14 +19,14 @@ class StreamController extends Controller
     public function index()
     {
         //
-        
+
         $streams = Streams::paginate(100);
-        
+
         $pageData = [
             'title' => 'STREAM LISTINGS  ',
             'streams' => $streams
         ];
-        
+
 
         return  view('streams.index', $pageData);
     }
@@ -40,15 +40,15 @@ class StreamController extends Controller
 
         if($user->hasRole('admin')){
             $streams = Streams::with('classes')->get();
-            
+
         }
         else{
-     
+
         $streams = Streams::with('classes')
         ->whereHas('classes', function ($query) use ($user) {
             $query->where('branch_id', $user->branch_id);
         })
-       
+
         ->get();
         }
 
@@ -57,7 +57,7 @@ class StreamController extends Controller
 
         // Pass data to the view
         $pageData = [
-            'title' => 'All Streams',
+            'title' => 'Active Classes',
             'streams' => $streams
         ];
 
@@ -65,56 +65,66 @@ class StreamController extends Controller
     }
 
     public function showLearners($stream_id, Request $request)
-{
+    {
+        $status = $request->input('status'); // 'active', 'inactive', 'all' or null
+        $perPage = $request->input('per_page', 10);
+        $search = $request->input('search', '');
 
-    
-    $status = $request->input('status', '');
-    $perPage = $request->input('per_page', 10); // Default to 10 if not specified
-    $search = $request->input('search', ''); // Search term
+        // Fetch stream
+        $stream = Streams::findOrFail($stream_id);
 
-    // Fetch the stream
-    $stream = Streams::findOrFail($stream_id);
+        // Start learners query from the stream relationship
+        $learnersQuery = $stream->learners()->newQuery();
 
-    // Filter learners based on status and search term, then paginate
-    $learnersQuery = $stream->learners()->newQuery();
+        // Handle status filter
+        if ($status !== 'all') {
+            if (!empty($status)) {
+                $learnersQuery->where('status', $status);
+            } else {
+                $learnersQuery->where('status', 'active'); // default
+            }
+        }
 
-    if (!empty($status)) {
-        $learnersQuery->where('status', 'like', "%$status%");
+        // Handle search filter
+        if (!empty($search)) {
+            $learnersQuery->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                ->orWhere('name', 'like', "%$search%"); // Replace with actual searchable field(s)
+            });
+        }
+
+        // Paginate results, preserving query strings
+        $learners = $learnersQuery->paginate($perPage)->appends($request->query());
+
+        // Stats
+        $totalActiveLearners = $stream->learners()->where('status', 'active')->count();
+        $totalInactiveLearners = $stream->learners()->where('status', 'inactive')->count();
+        $totalMaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'male')->count();
+        $totalFemaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'female')->count();
+        $viewType = request('view', 'table'); // default to table
+
+        return view('streams.learners', [
+            'title' => 'Learners ' . $stream->classes->name . ' ' . $stream->name,
+            'stream' => $stream,
+            'learners' => $learners,
+            'totalActiveLearners' => $totalActiveLearners,
+            'totalInactiveLearners' => $totalInactiveLearners,
+            'totalMaleLearners' => $totalMaleLearners,
+            'totalFemaleLearners' => $totalFemaleLearners,
+            'stream_id' => $stream_id,
+            'viewType' => $viewType,
+        ]);
+
+
+;
     }
 
-    if (!empty($search)) {
-        $learnersQuery->where(function($q) use ($search) {
-            $q->where('name', 'like', "%$search%")
-              ->orWhere('other_field', 'like', "%$search%"); // Adjust this to include other searchable fields
-        });
-    }
-
-    $learners = $learnersQuery->paginate($perPage);
 
 
-    // Retrieve counts for different categories of learners
-    $totalActiveLearners = $stream->learners()->where('status', 'active')->count();
-    $totalInactiveLearners = $stream->learners()->where('status', 'inactive')->count();
-    $totalMaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'male')->count();
-    $totalFemaleLearners = $stream->learners()->where('status', 'active')->where('gender', 'female')->count();
-
-    // Prepare data for the view
-    $pageData = [
-        'title' => 'Learners ' . $stream->classes->name . ' ' . $stream->name,
-        'stream' => $stream,
-        'learners' => $learners, // Paginate active learners with default of 50 per page
-        'totalActiveLearners' => $totalActiveLearners,
-        'totalInactiveLearners' => $totalInactiveLearners,
-        'totalMaleLearners' => $totalMaleLearners,
-        'totalFemaleLearners' => $totalFemaleLearners,
-        'stream_id' => $stream_id
-    ];
-
-    return view('streams.learners', $pageData);
-}
 
 
-        
+
+
     // pagination
     public function showStreamLearners(Request $request, $streamId)
     {
@@ -127,9 +137,7 @@ class StreamController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
@@ -140,7 +148,7 @@ class StreamController extends Controller
             'classes' => $classes
         ];
 
-        
+
         return  view('streams.create', $pageData);
 
     }
@@ -154,8 +162,8 @@ class StreamController extends Controller
         // dd($request);
 
         $request->validate([
-            'name' => 'required', 
-            'classes_id' => 'required', 
+            'name' => 'required',
+            'classes_id' => 'required',
         ]);
 
         $stream->name = $request->input('name');
@@ -184,7 +192,7 @@ class StreamController extends Controller
 
         if (!$auth_user->can('edit streams')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        }  
+        }
 
         $classes = Classes::all();
         $pageData = [
@@ -194,7 +202,7 @@ class StreamController extends Controller
         ];
 
         // dd($pageData);
-        
+
         return  view('streams.edit', $pageData);
     }
 
@@ -207,17 +215,17 @@ class StreamController extends Controller
         $auth_user = User::find(auth()->user()->id);
         if (!$auth_user->can('edit streams')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        }  
+        }
         $request->validate([
             'name' => 'required',
             'classes_id' => 'required',
-           
+
         ]);
 
         $stream->name = $request->input('name');
         $stream->classes_id = $request->input('classes_id');
         $stream->update();
-  
+
         return redirect(route('streams.index'))->with('success', 'Successfully updated stream data' );
     }
 
@@ -230,7 +238,7 @@ class StreamController extends Controller
         $auth_user = User::find(auth()->user()->id);
         if (!$auth_user->can('delete streams')) {
             return redirect()->back()->with('error', env('PERMISSION_ERROR_MESSAGE'));
-        }  
+        }
 
         $stream->delete();
         return redirect(route('streams.index'))->with('Success','Successfully deleted stream record');
