@@ -187,7 +187,8 @@
                         <th class="px-4 py-3">Contact</th>
                         <th class="px-4 py-3">Transport Route</th>
                         <th class="px-4 py-3">Bus/Vehicle</th>
-                        <th class="px-4 py-3">Co-Curricular Activity</th>
+                        <th class="px-4 py-3">Co-Curricular</th>
+                        <th class="px-4 py-3">Lunch</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Actions</th>
                     </tr>
@@ -210,6 +211,7 @@
                         <td class="px-4 py-3 text-sm">{{ $learner->transport_route }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->bus ? $learner->bus->number_plate . ' - ' . $learner->bus->driver : 'N/A' }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->co_curricular_activity }}</td>
+                        <td class="px-4 py-3 text-sm"> {{ $learner->lunch ? 'Yes' : 'No' }}</td>
                         <td class="px-4 py-3 text-xs">
                             @if ($learner->status == 'active')
                             <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">

@@ -92,7 +92,8 @@ class LearnersController extends Controller
             'admission_no' => 'required|unique:students,admission_no',
             'co_curricular_activity' => 'nullable',
             'transport_route' => 'nullable',
-            'bus_id' => 'nullable|exists:buses,id'
+            'bus_id' => 'nullable|exists:buses,id',
+            'lunch' => 'required|boolean'
         ]);
 
         $learner = new Learners();
@@ -110,6 +111,7 @@ class LearnersController extends Controller
         $learner->co_curricular_activity = $request->input('co_curricular_activity');
         $learner->transport_route = $request->input('transport_route');
         $learner->bus_id = $request->input('bus_id');
+        $learner->lunch = $request->input('lunch');
         $learner->status = 'active';
         $learner->save();
 
@@ -171,6 +173,7 @@ class LearnersController extends Controller
             'co_curricular_activity' => 'required',
             'transport_route' => 'required',
             'bus_id' => 'nullable|exists:buses,id',
+            'lunch' => 'required|boolean'
         ]);
 
         $learner = Learners::find($id);
@@ -189,6 +192,8 @@ class LearnersController extends Controller
         $learner->co_curricular_activity = $request->input('co_curricular_activity');
         $learner->transport_route = $request->input('transport_route');
         $learner->bus_id = $request->input('bus_id');
+        $learner->lunch = $request->input('lunch');
+
         $learner->update();
 
         return redirect(route('streams.learners', $learner->stream_id))->with('success', 'Learner updated successfully !');
