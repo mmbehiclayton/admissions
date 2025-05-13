@@ -97,7 +97,7 @@
                 @enderror
             </div>
 
-            
+
             <div class="my-1">
                 <label class="block mt-4 text-sm">
                     <span class="text-gray-700 dark:text-gray-400">
@@ -232,6 +232,26 @@
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+            {{-- Bus --}}
+            <div class="my-1">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Bus</span>
+                    <select name="bus_id"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400
+                            focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-select">
+                        <option value="">-- Select Bus --</option>
+                        @foreach ($buses as $bus)
+                            <option value="{{ $bus->id }}" {{ old('bus_id', $learner->bus_id) == $bus->id ? 'selected' : '' }}>
+                                {{ $bus->number_plate }} - {{ $bus->route }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+                @error('bus_id')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
 
             <div class="my-1">
                 <label class="block mt-4 text-sm">

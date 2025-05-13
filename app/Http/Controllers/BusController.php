@@ -31,16 +31,20 @@ class BusController extends Controller
     {
         $validated = $request->validate([
             'number_plate' => 'required|unique:buses,number_plate',
-            'driver' => 'required|string',
-            'assistant' => 'required|string',
-            'route' => 'required|string',
-            'capacity' => 'required|integer|min:1',
+            'driver'       => 'required|string',
+            'contact'      => 'required|string',
+            'assistant'    => 'nullable|string',
+            'route'        => 'nullable|string',
+            'capacity'     => 'nullable|integer|min:1',
+            'owner'        => 'nullable|string',
+            'type'         => 'nullable|in:Private,Public',
         ]);
 
         Bus::create($validated);
 
         return redirect()->route('buses.index')->with('success', 'Bus registered successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -65,16 +69,20 @@ class BusController extends Controller
     {
         $validated = $request->validate([
             'number_plate' => 'required|unique:buses,number_plate,' . $bus->id,
-            'driver' => 'required|string',
-            'assistant' => 'required|string',
-            'route' => 'required|string',
-            'capacity' => 'required|integer|min:1',
+            'driver'       => 'required|string',
+            'contact'      => 'required|string',
+            'assistant'    => 'nullable|string',
+            'route'        => 'nullable|string',
+            'capacity'     => 'nullable|integer|min:1',
+            'owner'        => 'nullable|string',
+            'type'         => 'nullable|in:Private,Public',
         ]);
 
         $bus->update($validated);
 
         return redirect()->route('buses.index')->with('success', 'Bus updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

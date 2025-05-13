@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+<div class="p-2 flex gap-4 flex-col md:flex-row">
+    <div class="w-full lg:w-2/3 flex flex-col gap-8"> LEFT</div>
+    <div class="w-full lg:w-1/3 flex flex-col gap-8"> RIGHT</div>
+
+
+</div>
           <div class="container px-6 mx-auto grid">
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
@@ -185,11 +191,5 @@
                 </table>
               </div>
             </div>
-
-
-
-
-
-
           </div>
 @endsection

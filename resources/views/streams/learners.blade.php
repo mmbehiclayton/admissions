@@ -10,14 +10,14 @@
                 </svg>
                 <span>Back to All Streams</span>
             </a>
-            <h2 class="ml-4 text-2xl font-semibold dark:text-white">{{ $title }}</h2>
+            <h4 class="ml-4 text-md font-semibold dark:text-white">{{ $title }}</h4>
         </div>
 
         <div class="flex space-x-4">
             <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text">
                 <i class="fas fa-download"></i> Import
             </a>
-            <a href="{{ route('learners.create') }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text">
+            <a href="{{ route('learners.create', ['stream_id' => $stream->id]) }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text">
                 <i class="fas fa-user-edit"></i> Add Learner
             </a>
             <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text">
@@ -144,7 +144,7 @@
             <span class="ml-2 text-gray-700 dark:text-gray-300">records</span>
         </div>
 
-        
+
     </form>
 
     {{-- Add toggle button --}}
@@ -186,6 +186,7 @@
                         <th class="px-4 py-3">DOA</th>
                         <th class="px-4 py-3">Contact</th>
                         <th class="px-4 py-3">Transport Route</th>
+                        <th class="px-4 py-3">Bus/Vehicle</th>
                         <th class="px-4 py-3">Co-Curricular Activity</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Actions</th>
@@ -207,6 +208,7 @@
                         <td class="px-4 py-3 text-sm">{{ $learner->date_of_addmission }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->contact }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->transport_route }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $learner->bus ? $learner->bus->number_plate . ' - ' . $learner->bus->driver : 'N/A' }}</td>
                         <td class="px-4 py-3 text-sm">{{ $learner->co_curricular_activity }}</td>
                         <td class="px-4 py-3 text-xs">
                             @if ($learner->status == 'active')

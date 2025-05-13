@@ -227,6 +227,25 @@
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="my-1">
+            <label for="bus_id" class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                        Select Bus
+                </span>
+            </label>
+            <select name="bus_id" id="bus_id" class="block w-full text-sm border-r-2 border-gray-950 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option value="">-- Select Bus --</option>
+                @foreach ($buses as $bus)
+                    <option value="{{ $bus->id }}" {{ old('bus_id') == $bus->id ? 'selected' : '' }}>
+                        {{ $bus->number_plate }} - {{ $bus->route }}
+                    </option>
+                @endforeach
+            </select>
+            @error('bus_id')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
         </div>
         <button class="p-2 bg-purple-600 ml-1 w-56 text-white hover:bg-purple-700 type=" submit">Submit</button>
 

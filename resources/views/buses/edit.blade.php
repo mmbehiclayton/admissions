@@ -10,78 +10,115 @@
         @csrf
         @method('PUT')
 
-        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="px-6 py-4 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Bus Details</h3>
 
-            {{-- Number Plate --}}
-            <div class="my-1">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Number Plate</span>
-                    <input name="number_plate" value="{{ old('number_plate', $bus->number_plate) }}" placeholder="e.g. KDA 123A"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                </label>
-                @error('number_plate')
-                <div class="text-red-500">{{ $message }}</div>
-                @enderror
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {{-- Number Plate --}}
+                <div>
+                    <label for="number_plate" class="block text-sm text-gray-700 dark:text-gray-400">Number Plate</label>
+                    <input id="number_plate" name="number_plate" value="{{ old('number_plate', $bus->number_plate) }}"
+                        placeholder="e.g. KDA 123A" required
+                        class="block w-full mt-1 form-input" />
+                    @error('number_plate')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Driver --}}
+                <div>
+                    <label for="driver" class="block text-sm text-gray-700 dark:text-gray-400">Driver</label>
+                    <input id="driver" name="driver" value="{{ old('driver', $bus->driver) }}"
+                        placeholder="Driver Name" required
+                        class="block w-full mt-1 form-input" />
+                    @error('driver')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Assistant --}}
+                <div>
+                    <label for="assistant" class="block text-sm text-gray-700 dark:text-gray-400">Assistant</label>
+                    <input id="assistant" name="assistant" value="{{ old('assistant', $bus->assistant) }}"
+                        placeholder="Assistant Name" required
+                        class="block w-full mt-1 form-input" />
+                    @error('assistant')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Route --}}
+                <div>
+                    <label for="route" class="block text-sm text-gray-700 dark:text-gray-400">Route</label>
+                    <input id="route" name="route" value="{{ old('route', $bus->route) }}"
+                        placeholder="e.g. South C - Madaraka - Upperhill" required
+                        class="block w-full mt-1 form-input" />
+                    @error('route')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Capacity --}}
+                <div>
+                    <label for="capacity" class="block text-sm text-gray-700 dark:text-gray-400">Capacity</label>
+                    <input id="capacity" name="capacity" type="number" min="1"
+                        value="{{ old('capacity', $bus->capacity) }}" placeholder="e.g. 60" required
+                        class="block w-full mt-1 form-input" />
+                    @error('capacity')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Owner --}}
+                <div>
+                    <label for="owner" class="block text-sm text-gray-700 dark:text-gray-400">Owner</label>
+                    <input id="owner" name="owner" value="{{ old('owner', $bus->owner) }}"
+                        placeholder="Owner Name" required
+                        class="block w-full mt-1 form-input" />
+                    @error('owner')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Contact --}}
+                <div>
+                    <label for="contact" class="block text-sm text-gray-700 dark:text-gray-400">Contact</label>
+                    <input id="contact" name="contact" value="{{ old('contact', $bus->contact) }}"
+                        placeholder="e.g. +254712345678" required
+                        class="block w-full mt-1 form-input" />
+                    @error('contact')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Type --}}
+                <div>
+                    <label for="type" class="block text-sm text-gray-700 dark:text-gray-400">Bus Type</label>
+                    <select id="type" name="type" required
+                        class="block w-full mt-1 form-select">
+                        <option value="">-- Select Type --</option>
+                        <option value="Private" {{ old('type', $bus->type) == 'Private' ? 'selected' : '' }}>Private</option>
+                        <option value="Public" {{ old('type', $bus->type) == 'Public' ? 'selected' : '' }}>Public</option>
+
+                    </select>
+                    @error('type')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
             </div>
 
-            {{-- Driver --}}
-            <div class="my-1">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Driver</span>
-                    <input name="driver" value="{{ old('driver', $bus->driver) }}" placeholder="Driver Name"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                </label>
-                @error('driver')
-                <div class="text-red-500">{{ $message }}</div>
-                @enderror
+            <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                <a href="{{ route('buses.index') }}"
+                    class="p-2 w-full sm:w-56 bg-gray-300 text-gray-800 hover:bg-gray-400 text-center transition duration-150 ease-in-out rounded">
+                    Cancel
+                </a>
+                <button type="submit"
+                    class="p-2 w-full sm:w-56 bg-purple-600 text-white hover:bg-purple-700 transition duration-150 ease-in-out rounded">
+                    Update Bus
+                </button>
             </div>
-
-            {{-- Assistant --}}
-            <div class="my-1">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Assistant</span>
-                    <input name="assistant" value="{{ old('assistant', $bus->assistant) }}" placeholder="Assistant Name"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                </label>
-                @error('assistant')
-                <div class="text-red-500">{{ $message }}</div>
-                @enderror
-            </div>
-
-            {{-- Route --}}
-            <div class="my-1">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Route</span>
-                    <input name="route" value="{{ old('route', $bus->route) }}" placeholder="e.g. South C - Madaraka - Upperhill"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                </label>
-                @error('route')
-                <div class="text-red-500">{{ $message }}</div>
-                @enderror
-            </div>
-
-            {{-- Capacity --}}
-            <div class="my-1">
-                <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400">Capacity</span>
-                    <input name="capacity" type="number" value="{{ old('capacity', $bus->capacity) }}" placeholder="e.g. 60"
-                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" />
-                </label>
-                @error('capacity')
-                <div class="text-red-500">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-
-        <div class="flex gap-2">
-            <a href="{{ route('buses.index') }}"
-                class="p-2 w-56 bg-gray-300 text-gray-800 hover:bg-gray-400 transition duration-150 ease-in-out text-center">
-                Cancel
-            </a>
-            <button type="submit"
-                class="p-2 bg-purple-600 w-56 text-white hover:bg-purple-700 transition duration-150 ease-in-out">
-                Update Bus
-            </button>
         </div>
     </form>
 </div>

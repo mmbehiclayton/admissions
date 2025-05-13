@@ -15,6 +15,9 @@ class Bus extends Model
         'assistant',
         'route',
         'capacity',
+        'owner',
+        'contact',
+        'type'
     ];
 
     public function learners()

@@ -104,7 +104,7 @@ class StreamController extends Controller
         $viewType = request('view', 'table'); // default to table
 
         return view('streams.learners', [
-            'title' => 'Learners ' . $stream->classes->name . ' ' . $stream->name,
+            'title' => '>> Learners ' . $stream->classes->name . ' ' . $stream->name,
             'stream' => $stream,
             'learners' => $learners,
             'totalActiveLearners' => $totalActiveLearners,

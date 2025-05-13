@@ -26,6 +26,7 @@ class Learners extends Model
         'contact',
         'transport_route',
         'co_curricular_activity',
+        'bus_id',
 
     ];
 

@@ -7,6 +7,7 @@ use App\Models\Learners;
 use App\Models\Streams;
 use App\Imports\LearnersImport;
 use App\Exports\AllLearnersExport;
+use App\Models\Bus;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -43,17 +44,32 @@ class LearnersController extends Controller
      */
     public function create()
     {
-        $classes = Classes::all();
-        $streams = Streams::all();
+        // Get the logged-in user
+        $user = auth()->user();
+
+        // Get the user's associated branch
+        $branch = $user->branch;
+
+        // Get streams that belong to the user's branch
+        $streams = Streams::with('classes')
+        ->whereHas('classes', function ($query) use ($user) {
+            $query->where('branch_id', $user->branch_id);
+        })->get();
+
+        // Get all classes related to the user's branch
+        $classes = Classes::where('branch_id', $user->branch_id)->get();
+        $buses = Bus::all();
 
         $pageData = [
             'classes' => $classes,
             'streams' => $streams,
+            'buses' => $buses,
             'title' => 'LEARNERS CREATE PAGE'
         ];
 
         return view('learners.create', $pageData);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -75,7 +91,8 @@ class LearnersController extends Controller
             'contact' => 'nullable',
             'admission_no' => 'required|unique:students,admission_no',
             'co_curricular_activity' => 'nullable',
-            'transport_route' => 'nullable'
+            'transport_route' => 'nullable',
+            'bus_id' => 'nullable|exists:buses,id'
         ]);
 
         $learner = new Learners();
@@ -92,10 +109,14 @@ class LearnersController extends Controller
         $learner->contact = $request->input('contact');
         $learner->co_curricular_activity = $request->input('co_curricular_activity');
         $learner->transport_route = $request->input('transport_route');
+        $learner->bus_id = $request->input('bus_id');
         $learner->status = 'active';
         $learner->save();
 
-        return redirect(route('learners.index'))->with('success', 'Learner Added successfully !');
+        $streamId = $learner->stream_id;
+        return redirect("/streams/{$streamId}/learners")->with('success', 'Learner created successfully!');
+
+        // return redirect(route('admin.index'))->with('success', 'Learner Added successfully !');
 
     }
 
@@ -116,12 +137,14 @@ class LearnersController extends Controller
         $classes = Classes::all();
         $streams = Streams::all();
         $learner = Learners::find($id);
+        $buses = Bus::all();
 
         $pageData = [
             'title' => 'LEARNERS EDIT PAGE',
             'classes' => $classes,
             'streams' => $streams,
-            'learner' => $learner
+            'learner' => $learner,
+            'buses' => $buses
         ];
 
         return view('learners.edit', $pageData);
@@ -146,7 +169,8 @@ class LearnersController extends Controller
             'contact' => 'required',
             'admission_no' => 'required',
             'co_curricular_activity' => 'required',
-            'transport_route' => 'required'
+            'transport_route' => 'required',
+            'bus_id' => 'nullable|exists:buses,id',
         ]);
 
         $learner = Learners::find($id);
@@ -164,6 +188,7 @@ class LearnersController extends Controller
         $learner->status = $request->input('status');
         $learner->co_curricular_activity = $request->input('co_curricular_activity');
         $learner->transport_route = $request->input('transport_route');
+        $learner->bus_id = $request->input('bus_id');
         $learner->update();
 
         return redirect(route('streams.learners', $learner->stream_id))->with('success', 'Learner updated successfully !');
