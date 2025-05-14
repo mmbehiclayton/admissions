@@ -251,6 +251,20 @@
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            <div class="my-1">
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Takes School Lunch?
+                    </span>
+                    <select name="lunch" class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-select">
+                        <option value="1" {{ old('lunch', $learner->lunch ?? '') == 1 ? 'selected' : '' }}>Yes</option>
+                        <option value="0" {{ old('lunch', $learner->lunch ?? '') == 0 ? 'selected' : '' }}>No</option>
+                    </select>
+                </label>
+                @error('lunch')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
 
 
             <div class="my-1">
@@ -271,7 +285,7 @@
                 @enderror
             </div>
         </div>
-        <button class="p-2 bg-purple-600 ml-1 w-56 text-white hover:bg-purple-700 type=" submit">Submit</button>
+        <button class="p-2 bg-purple-600 ml-1 w-56 text-white hover:bg-purple-700" type="submit">Update  Learner</button>
 
     </form>
 </div>

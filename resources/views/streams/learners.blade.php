@@ -17,11 +17,14 @@
             <a href="{{ route('learners.upload') }}" class="px-4 py-2 text-white bg-blue-500 rounded text">
                 <i class="fas fa-download"></i> Import
             </a>
-            <a href="{{ route('learners.create', ['stream_id' => $stream->id]) }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text">
+            <a href="{{ route('learners.create') }}?stream_id={{ $stream->id }}" class="px-4 py-2 mr-4 text-white bg-green-500 rounded text">
                 <i class="fas fa-user-edit"></i> Add Learner
             </a>
             <a href="{{ route('streams.export.learners', $stream_id) }}" class="px-4 py-2 text-white bg-green-500 rounded text">
                 <i class="fas fa-file-excel"></i> Class List
+            </a>
+            <a href="{{ route('streams.transport.export', $stream->id) }}" class="px-4 py-2 text-white bg-green-500 rounded text">
+                <i class="fas fa-file-excel"></i> Transport List
             </a>
         </div>
     </div><br><br>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ClassTransportList;
 use App\Models\Classes;
 use App\Models\Learners;
 use App\Models\Streams;
@@ -81,12 +82,12 @@ class LearnersController extends Controller
         $request->validate([
             'stream_id' => 'required',
             'name' => 'required',
-            'assessment_no' => 'unique:students,assessment_no',
+            'assessment_no' => 'nullable',
             'gender' => 'required',
             'dob' => 'required|date',
             'bc_pp_entry_no' => 'unique:students,bc_pp_entry_no',
             'nationality' => 'required',
-            'nemis_code' => 'unique:students,nemis_code',
+            'nemis_code' => 'nullable',
             'date_of_addmission' => 'required|date',
             'contact' => 'nullable',
             'admission_no' => 'required|unique:students,admission_no',
@@ -161,12 +162,12 @@ class LearnersController extends Controller
         $request->validate([
             'stream_id' => 'required',
             'name' => 'required',
-            'assessment_no' => 'required',
+            'assessment_no' => 'nullable',
             'gender' => 'required',
             'dob' => 'required|date',
             'bc_pp_entry_no' => 'required',
             'nationality' => 'required',
-            'nemis_code' => 'required',
+            'nemis_code' => 'nullable',
             'date_of_addmission' => 'required',
             'contact' => 'required',
             'admission_no' => 'required',
@@ -193,10 +194,11 @@ class LearnersController extends Controller
         $learner->transport_route = $request->input('transport_route');
         $learner->bus_id = $request->input('bus_id');
         $learner->lunch = $request->input('lunch');
+        $streamId = $learner->stream_id;
 
         $learner->update();
 
-        return redirect(route('streams.learners', $learner->stream_id))->with('success', 'Learner updated successfully !');
+        return redirect("/streams/{$streamId}/learners")->with('success', 'Learner updated successfully !');
     }
 
     /**
@@ -245,11 +247,5 @@ class LearnersController extends Controller
 
         return redirect()->route('learners.index')->with('success', 'Selected learners deleted successfully.');
     }
-
-
-
-
-
-
 
 }

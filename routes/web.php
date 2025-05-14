@@ -8,8 +8,10 @@ use App\Http\Controllers\LearnersController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StreamController;
 use App\Http\Controllers\StudentsController;
+use App\Models\Streams;
 use Illuminate\Support\Facades\Route;
 use App\Exports\AllLearnersExport;
+use App\Exports\ClassTransportList;
 use App\Http\Controllers\UserController;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -35,6 +37,11 @@ Route::resource('users', UserController::class)->middleware('auth');
 Route::resource('buses', BusController::class)->middleware('auth');
 //route for bulk-delete
 Route::delete('/learners/bulk-delete', [LearnersController::class, 'bulkDelete'])->name('learners.bulkDelete');
+
+//transport lists
+Route::get('/streams/{stream}/transport-export', function (Streams $stream) {
+    return Excel::download(new ClassTransportList($stream), 'Transport-List-' . $stream->classes->name . ' '. $stream->name . '.xlsx');
+})->name('streams.transport.export');
 
 
 
