@@ -13,6 +13,8 @@ class Learners extends Model
     protected $table = 'students';
 
     protected $fillable = [
+        'class_id',
+        'branch_id',
         'stream_id',
         'assessment_no',
         'name',

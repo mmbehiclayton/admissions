@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('buses', function (Blueprint $table) {
-        $table->string('owner')->after('capacity');
-        $table->string('contact')->after('owner');
+        $table->string('owner')->after('capacity')->nullable();
+        $table->string('contact')->after('owner')->nullable();
         $table->enum('type', ['Private', 'Public'])->after('contact');
     });
     }

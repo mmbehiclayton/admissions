@@ -4,125 +4,108 @@
         <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/">
             Admissions App
         </a>
+
+        <!-- Dashboard -->
         <ul class="mt-6">
             <li class="relative px-6 py-3">
                 @if (request()->routeIs('admin.home'))
-                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg"></span>
                 @endif
-
-                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100" href="/">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100" href="/">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 12l2-2m0 0l7-7 7 7m-9 14v-6h4v6m5-10h2a2 2 0 012 2v7a2 2 0 01-2 2h-2"/>
                     </svg>
                     <span class="ml-4">Dashboard</span>
                 </a>
             </li>
         </ul>
+
+        <!-- Active Classes -->
         <ul>
             <li class="relative px-6 py-3">
                 @if (request()->routeIs('classes.index'))
-                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg"></span>
                 @endif
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('streams.all') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                <a class="inline-flex items-center w-full text-sm font-semibold hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('streams.all') }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6"/>
                     </svg>
                     <span class="ml-4">Active Classes</span>
                 </a>
             </li>
         </ul>
+
+        <!-- Learner Enrollment -->
         <ul>
             <li class="relative px-6 py-3">
                 @if (request()->routeIs('learners.index'))
-                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg"></span>
                 @endif
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('learners.index') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                <a class="inline-flex items-center w-full text-sm font-semibold hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('learners.index') }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5.121 17.804A6 6 0 0112 15h0a6 6 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"/>
                     </svg>
                     <span class="ml-4">Learner Enrollment</span>
                 </a>
             </li>
         </ul>
+
+        <!-- Transport -->
         <ul>
             <li class="relative px-6 py-3">
                 @if (request()->routeIs('buses.index'))
-                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <span class="absolute inset-y-0 left-0 w-1 bg-green-300 rounded-tr-lg rounded-br-lg"></span>
                 @endif
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('buses.index') }}">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                <a class="inline-flex items-center w-full text-sm font-semibold hover:text-gray-800 dark:hover:text-gray-200" href="{{ route('buses.index') }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 17a1 1 0 001 1h1a1 1 0 001-1M18 17a1 1 0 001 1h1a1 1 0 001-1M5 7h14l1 5H4l1-5zM6 12h12v2H6v-2z"/>
                     </svg>
                     <span class="ml-4">Transport</span>
                 </a>
             </li>
         </ul>
+
+        <!-- App Settings -->
         <ul>
-            <!--Settings menu -->
             <li class="relative px-6 py-3">
-                <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 focus:border-0" @click="togglePagesMenu" aria-haspopup="true">
-                    <span class="inline-flex items-center h-10 px-1 border-green-300 focus:border-0">
-                        <svg class="w-5 h-5 focus:border-0" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                <button class="inline-flex items-center justify-between w-full text-sm font-semibold hover:text-gray-800 dark:hover:text-gray-200 focus:outline-none" @click="togglePagesMenu" aria-haspopup="true">
+                    <span class="inline-flex items-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 8c1.104 0 2-.896 2-2s-.896-2-2-2-2 .896-2 2 .896 2 2 2zm0 1c-1.657 0-3 1.343-3 3v5h6v-5c0-1.657-1.343-3-3-3z"/>
                         </svg>
                         <span class="ml-4">App Settings</span>
                     </span>
-                    <svg class="w-4 h-4 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
                 </button>
                 <template x-if="isPagesMenuOpen">
-                    <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu">
+                    <ul class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900">
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-
-                    <ul
-                            x-transition:enter="transition-all ease-in-out duration-300"
-                            x-transition:enter-start="opacity-25 max-h-0"
-                            x-transition:enter-end="opacity-100 max-h-xl"
-                            x-transition:leave="transition-all ease-in-out duration-300"
-                            x-transition:leave-start="opacity-100 max-h-xl"
-                            x-transition:leave-end="opacity-0 max-h-0"
-                            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
-                            aria-label="submenu"
-                    >
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        >
+                            <a class="w-full" href="{{ route('users.index') }}">System Users</a>
+                        </li>
+                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                             <a class="w-full" href="{{ route('roles.index') }}">Roles & Permissions</a>
                         </li>
+                        
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                        <a class="w-full" href="{{route('users.index')}}">
-                                System Users
-                            </a>
+                            <a class="w-full" href="{{ route('classes.index') }}">Classes</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="{{ route('branches.index') }}">
-                                Branches
-                            </a>
+                            <a class="w-full" href="{{ route('streams.index') }}">Streams</a>
                         </li>
                         <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="{{ route('classes.index') }}">
-                                Classes
-                            </a>
+                            <a class="w-full" href="{{ route('learners.upload') }}">Import Learners</a>
                         </li>
-                        <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="{{ route('streams.index') }} ">Streams</a>
-                        </li>
+                        <!-- Add more subitems here -->
                     </ul>
                 </template>
             </li>
-
-            <!-- test settings menu -->
         </ul>
-
-
-        <div class="px-6 my-6">
-            <a href="{{ route('learners.upload') }}">
-                <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-green-600 border border-transparent rounded-lg active:bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-outline-purple">
-                    Import Learners
-                    <span class="ml-2" aria-hidden="true">+</span>
-                </button>
-            </a>
-
-        </div>
     </div>
 </aside>

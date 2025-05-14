@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('number_plate')->unique();
             $table->string('driver');
-            $table->string('assistant');
-            $table->string('route');
-            $table->integer('capacity');
+            $table->string('assistant')->nullable();
+            $table->string('route')->nullable();
+            $table->integer('capacity')->nullable();
             $table->timestamps();
         });
     }
